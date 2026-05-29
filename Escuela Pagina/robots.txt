@@ -1,5 +1,0 @@
-# Robots para Instituto Tecnico Morazan
-User-agent: *
-Allow: /
-
-Sitemap: https://www.tecmorazan.edu.hn/sitemap.xml
