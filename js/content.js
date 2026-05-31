@@ -26,6 +26,11 @@ window.ITM.content = {
       title: "Programas | Instituto Tecnico Morazan"
     },
     {
+      id: "promo2026",
+      hash: "#promo2026",
+      title: "Promo 2026 | Instituto Tecnico Morazan"
+    },
+    {
       id: "noticias",
       hash: "#noticias",
       title: "Noticias | Instituto Tecnico Morazan"

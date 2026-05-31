@@ -66,6 +66,10 @@ window.ITM.sections.contacto = {
         href: "#programas"
       },
       {
+        label: "Promo 2026",
+        href: "#promo2026"
+      },
+      {
         label: "Comunicados",
         href: "#noticias"
       },

@@ -93,6 +93,27 @@ window.ITM.renderer = (() => {
     `);
   };
 
+  const renderPromo2026 = () => {
+    const data = window.ITM.sections.promo2026;
+    if (!data) return;
+
+    setHTML("#promo2026 .section-header .eyebrow", data.eyebrow);
+    setHTML("#promo2026 .section-header h2", data.title);
+    setHTML("#promo2026 .section-header p", data.text);
+
+    renderCards(".promo-grid", data.items, (item) => `
+      <article class="card promo-card">
+        <div class="promo-card-header">
+          <span class="program-icon">${item.code}</span>
+          <span class="badge">${item.badge}</span>
+        </div>
+        <h3>${item.title}</h3>
+        <p>${item.text}</p>
+        <a class="button button-secondary" href="${item.href}">${item.cta}</a>
+      </article>
+    `);
+  };
+
   const renderNoticias = () => {
     const data = window.ITM.sections.noticias;
     if (!data) return;
@@ -241,6 +262,7 @@ window.ITM.renderer = (() => {
     renderInicio();
     renderMatricula();
     renderProgramas();
+    renderPromo2026();
     renderNoticias();
     renderActividades();
     renderFaq();
