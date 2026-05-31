@@ -137,7 +137,7 @@ textarea {
   place-items: center;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--surface-solid);
   box-shadow: var(--shadow-soft);
 }
@@ -146,6 +146,7 @@ textarea {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: inherit;
 }
 
 .brand-copy {
@@ -638,6 +639,20 @@ textarea {
 .career-nav .brand-copy strong,
 .career-nav .brand-copy small {
   color: var(--white);
+}
+
+.career-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.career-nav .theme-toggle {
+  background: rgba(255, 255, 255, 0.13);
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: none;
+  backdrop-filter: blur(12px);
 }
 
 .career-hero-content {
@@ -1401,8 +1416,16 @@ button.compact-news {
 
   .promo-logo-mark {
     position: static;
-    width: 118px;
-    margin-bottom: 18px;
+    width: 138px;
+    margin: 6px 0 24px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    opacity: 1;
+    filter:
+      drop-shadow(0 18px 24px rgba(0, 0, 0, 0.42))
+      drop-shadow(0 0 18px rgba(255, 255, 255, 0.1));
   }
 
   .tiktok-actions {
@@ -1484,8 +1507,38 @@ button.compact-news {
     text-overflow: ellipsis;
   }
 
+  .career-nav .brand-copy strong {
+    max-width: 190px;
+  }
+
+  .career-nav-actions {
+    gap: 8px;
+  }
+
+  .career-nav-actions .button {
+    min-height: 44px;
+    padding-inline: 14px;
+  }
+
   .hero-content {
     padding-bottom: 34px;
+  }
+
+  .career-hero-content {
+    padding-top: 96px;
+  }
+
+  .promo-logo-mark {
+    width: 118px;
+    margin: 12px 0 22px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    filter:
+      drop-shadow(0 12px 22px rgba(0, 0, 0, 0.5))
+      drop-shadow(0 0 16px rgba(255, 255, 255, 0.16));
   }
 
   .hero-actions .button {
