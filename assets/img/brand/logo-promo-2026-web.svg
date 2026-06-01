@@ -12,17 +12,17 @@
       }
 
       .st1, .st2 {
-        stroke: aqua;
+        stroke: #fff;
         stroke-miterlimit: 10;
-        stroke-width: .75px;
-      }
-
-      .st2 {
-        fill: #ceb79b;
+        stroke-width: .25px;
       }
 
       .st3 {
         display: none;
+      }
+
+      .st2 {
+        fill: #ceb79b;
       }
     </style>
   </defs>
