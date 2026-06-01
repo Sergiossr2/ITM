@@ -1,0 +1,16 @@
+{
+  "name": "Instituto Técnico Morazán",
+  "short_name": "ITM",
+  "description": "Formación técnica con carácter, innovación y propósito.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#edf5f3",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "assets/img/brand/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
