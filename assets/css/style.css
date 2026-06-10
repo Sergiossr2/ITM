@@ -515,8 +515,7 @@ textarea {
 
 /* Tarjetas y grids */
 .process-grid,
-.program-grid,
-.activity-grid {
+.program-grid {
   display: grid;
   gap: 14px;
 }
@@ -527,10 +526,6 @@ textarea {
 
 .program-grid {
   grid-template-columns: repeat(3, 1fr);
-}
-
-.activity-grid {
-  grid-template-columns: repeat(4, 1fr);
 }
 
 .card {
@@ -584,7 +579,7 @@ textarea {
 /* Promo 2026 */
 .promo-spotlight {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  grid-template-columns: 1fr;
   gap: 18px;
   align-items: stretch;
   margin-bottom: 18px;
@@ -616,8 +611,7 @@ textarea {
   font-size: 1.03rem;
 }
 
-.promo-ideas,
-.promo-countdown {
+.promo-ideas {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -635,65 +629,6 @@ textarea {
   color: var(--primary-strong);
   font-weight: 800;
   font-size: 0.9rem;
-}
-
-.promo-countdown-card {
-  display: grid;
-  align-content: center;
-  gap: 16px;
-  min-height: 100%;
-  padding: clamp(18px, 3vw, 26px);
-  border: 1px solid rgba(15, 118, 110, 0.28);
-  border-radius: var(--radius);
-  background:
-    linear-gradient(150deg, rgba(6, 19, 22, 0.96), rgba(15, 78, 74, 0.92)),
-    var(--ink);
-  color: var(--white);
-  box-shadow: 0 22px 54px rgba(6, 19, 22, 0.22);
-}
-
-.promo-countdown-label {
-  color: #fde68a;
-  font-size: 0.78rem;
-  font-weight: 950;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.promo-countdown {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.promo-countdown span {
-  min-height: 94px;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  padding: 13px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.72);
-  text-align: center;
-  font-size: 0.76rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.promo-countdown strong {
-  display: block;
-  color: #67e8f9;
-  font-size: clamp(1.85rem, 4vw, 2.65rem);
-  line-height: 1;
-  text-transform: none;
-}
-
-.promo-countdown-note {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.88rem;
-  font-weight: 800;
 }
 
 .promo-grid {
@@ -760,6 +695,100 @@ textarea {
 .promo-section .badge {
   background: rgba(245, 158, 11, 0.16);
   color: #8a5a05;
+}
+
+/* Logros de Informatica */
+.achievements-section {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-strong) 82%, transparent), color-mix(in srgb, var(--surface-soft) 46%, transparent)),
+    var(--bg-strong);
+}
+
+.achievement-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.achievement-legacy {
+  min-height: 100%;
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid color-mix(in srgb, var(--primary) 26%, transparent);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(6, 19, 22, 0.94), rgba(15, 78, 74, 0.9)),
+    var(--ink);
+  color: var(--white);
+  box-shadow: 0 24px 58px rgba(6, 19, 22, 0.22);
+}
+
+.achievement-legacy .eyebrow {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fde68a;
+}
+
+.achievement-legacy h3 {
+  margin: 16px 0 12px;
+  max-width: 620px;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: 0.98;
+}
+
+.achievement-legacy p {
+  max-width: 650px;
+  margin: 0 0 24px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.03rem;
+}
+
+.proof-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 24px;
+}
+
+.proof-list span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.09);
+  color: #d7fffa;
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.achievement-card {
+  min-height: 230px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.achievement-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--primary) 44%, var(--line));
+  box-shadow: var(--shadow);
+}
+
+.achievement-card h3 {
+  margin-top: 22px;
+}
+
+.achievement-card p {
+  margin-top: auto;
 }
 
 .promo-section .button-secondary {
@@ -2355,10 +2384,54 @@ textarea {
   font-weight: 800;
 }
 
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.project-card {
+  min-height: 260px;
+  padding: 22px;
+}
+
+.project-card span {
+  width: max-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line));
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  color: var(--primary-strong);
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.project-card h3 {
+  margin: 30px 0 10px;
+  font-size: 1.28rem;
+  line-height: 1.1;
+}
+
+.project-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
 .student-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
+}
+
+.student-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 290px;
 }
 
 .student-avatar {
@@ -2373,8 +2446,41 @@ textarea {
   letter-spacing: 0.04em;
 }
 
+.student-role {
+  width: max-content;
+  max-width: 100%;
+  margin: 18px 0 0;
+  padding: 6px 9px;
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+  color: var(--primary-strong) !important;
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
 .student-card h3 {
-  margin-top: 18px;
+  margin: 14px 0 0;
+}
+
+.student-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.student-tags span {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 850;
 }
 
 .social-card {
@@ -2465,209 +2571,6 @@ textarea {
   max-width: none !important;
   min-width: 0 !important;
   border-radius: 10px;
-}
-
-/* Noticias */
-.news-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(310px, 0.75fr);
-  gap: 14px;
-}
-
-.feature-news {
-  overflow: hidden;
-  position: relative;
-}
-
-.feature-news::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: var(--radius);
-  opacity: 0;
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--primary) 65%, transparent);
-}
-
-.feature-news.news-swap-active {
-  animation: featuredNewsSwap 0.62s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.feature-news.news-swap-active::after {
-  animation: newsHighlight 0.9s ease;
-}
-
-.news-visual {
-  min-height: 330px;
-  background:
-    linear-gradient(180deg, rgba(4, 14, 16, 0.08), rgba(4, 14, 16, 0.18) 46%, rgba(4, 14, 16, 0.58)),
-    url("../img/pages/noticia-destacada.png") center / cover;
-  background-position: center;
-  background-size: cover;
-}
-
-.feature-news .meta,
-.feature-news h3,
-.feature-news p {
-  margin-left: 22px;
-  margin-right: 22px;
-}
-
-.feature-news .meta {
-  margin-top: 20px;
-}
-
-.feature-news p:last-child {
-  margin-bottom: 24px;
-}
-
-.news-stack {
-  display: grid;
-  gap: 14px;
-}
-
-.news-stack.news-stack-swap .compact-news {
-  animation: compactNewsSettle 0.45s ease both;
-}
-
-.news-stack.news-stack-swap .compact-news:nth-child(2) {
-  animation-delay: 0.04s;
-}
-
-.news-stack.news-stack-swap .compact-news:nth-child(3) {
-  animation-delay: 0.08s;
-}
-
-.news-stack.news-stack-swap .compact-news:nth-child(4) {
-  animation-delay: 0.12s;
-}
-
-.compact-news {
-  width: 100%;
-  padding: 22px;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-button.compact-news {
-  font: inherit;
-}
-
-.compact-news:hover,
-.compact-news:focus-visible {
-  border-color: color-mix(in srgb, var(--primary) 55%, var(--line));
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-.compact-news:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--primary) 35%, transparent);
-  outline-offset: 3px;
-}
-
-.meta {
-  color: var(--primary-strong) !important;
-  font-size: 0.88rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-@keyframes featuredNewsSwap {
-  0% {
-    opacity: 0.45;
-    transform: translateY(18px) scale(0.985);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-3px) scale(1.01);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes newsHighlight {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes compactNewsSettle {
-  0% {
-    opacity: 0.55;
-    transform: translateX(16px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Actividades */
-.activity-tile {
-  min-height: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius);
-  color: var(--white);
-  background:
-    linear-gradient(180deg, rgba(4, 14, 16, 0.02), rgba(4, 14, 16, 0.28) 45%, rgba(4, 14, 16, 0.92)),
-    url("../img/activities/ciencia.png") center / cover;
-  box-shadow: var(--shadow-soft);
-}
-
-.activity-tile:nth-child(2) {
-  background-image:
-    linear-gradient(180deg, rgba(4, 14, 16, 0.02), rgba(4, 14, 16, 0.28) 45%, rgba(4, 14, 16, 0.92)),
-    url("../img/activities/cultura.png");
-  background-position: 35% 50%;
-}
-
-.activity-tile:nth-child(3) {
-  background-image:
-    linear-gradient(180deg, rgba(4, 14, 16, 0.02), rgba(4, 14, 16, 0.28) 45%, rgba(4, 14, 16, 0.92)),
-    url("../img/activities/deporte.png");
-  background-position: 62% 50%;
-}
-
-.activity-tile:nth-child(4) {
-  background-image:
-    linear-gradient(180deg, rgba(4, 14, 16, 0.02), rgba(4, 14, 16, 0.28) 45%, rgba(4, 14, 16, 0.92)),
-    url("../img/activities/servicio.png");
-  background-position: 82% 50%;
-}
-
-.activity-tile span {
-  width: max-content;
-  padding: 5px 9px;
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.16);
-  color: #d7fffa;
-  font-size: 0.82rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  backdrop-filter: blur(10px);
-}
-
-.activity-tile h3 {
-  margin: 12px 0 0;
-  font-size: 1.35rem;
-  line-height: 1.1;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.42);
 }
 
 /* Preguntas frecuentes */
@@ -2981,8 +2884,8 @@ button.compact-news {
 /* Responsive: tablet */
 @media (max-width: 1040px) {
   .hero-content,
-  .news-layout,
   .promo-spotlight,
+  .achievement-layout,
   .cta-band,
   .footer-contact,
   .footer-directory {
@@ -2998,8 +2901,9 @@ button.compact-news {
   }
 
   .program-grid,
-  .activity-grid,
+  .achievement-grid,
   .promo-grid,
+  .project-grid,
   .student-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -3102,9 +3006,6 @@ button.compact-news {
     flex-direction: column;
   }
 
-  .promo-countdown-card {
-    min-height: 260px;
-  }
 }
 
 /* Responsive: telefonos */
@@ -3163,8 +3064,9 @@ button.compact-news {
   }
 
   .program-grid,
-  .activity-grid,
+  .achievement-grid,
   .promo-grid,
+  .project-grid,
   .student-grid {
     grid-template-columns: 1fr;
   }
@@ -3173,20 +3075,8 @@ button.compact-news {
     padding: 18px;
   }
 
-  .promo-countdown-card {
-    padding: 14px;
-  }
-
   .promo-ideas span {
     flex: 1 1 100%;
-  }
-
-  .promo-countdown {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .promo-countdown span {
-    min-height: 82px;
   }
 
   .promo-intro-epic-panel {
@@ -3279,10 +3169,6 @@ button.compact-news {
   .promo-section {
     margin-top: 0;
     padding-top: clamp(58px, 8vw, 92px);
-  }
-
-  .news-visual {
-    min-height: 230px;
   }
 
   .footer-bottom {

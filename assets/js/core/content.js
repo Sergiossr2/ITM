@@ -13,42 +13,37 @@ window.ITM.content = {
     {
       id: "top",
       hash: "#top",
-      title: "Inicio | Instituto Tecnico Morazan"
+      title: "Bachillerato en Informatica | Estudia tecnologia"
     },
     {
       id: "promo2026",
       hash: "#promo2026",
-      title: "Promo 2026 | Instituto Tecnico Morazan"
+      title: "La carrera | Bachillerato en Informatica"
     },
     {
-      id: "matricula",
-      hash: "#matricula",
-      title: "Matricula | Instituto Tecnico Morazan"
+      id: "logros",
+      hash: "#logros",
+      title: "Logros | Bachillerato en Informatica"
     },
     {
       id: "programas",
       hash: "#programas",
-      title: "Programas | Instituto Tecnico Morazan"
+      title: "Lo que aprenderas | Bachillerato en Informatica"
     },
     {
-      id: "noticias",
-      hash: "#noticias",
-      title: "Noticias | Instituto Tecnico Morazan"
-    },
-    {
-      id: "actividades",
-      hash: "#actividades",
-      title: "Actividades | Instituto Tecnico Morazan"
+      id: "matricula",
+      hash: "#matricula",
+      title: "Inscripcion | Bachillerato en Informatica"
     },
     {
       id: "faq",
       hash: "#faq",
-      title: "Preguntas frecuentes | Instituto Tecnico Morazan"
+      title: "Preguntas frecuentes | Bachillerato en Informatica"
     },
     {
       id: "contacto",
       hash: "#contacto",
-      title: "Contacto | Instituto Tecnico Morazan"
+      title: "Contacto | Bachillerato en Informatica"
     }
   ],
 

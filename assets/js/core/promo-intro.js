@@ -73,7 +73,17 @@ window.ITM.promoIntro = (() => {
   };
 
   const getCareer = () => {
-    return Object.keys(careers).find((careerClass) => document.body.classList.contains(careerClass));
+    const explicitCareer = Object.keys(careers).find((careerClass) => document.body.classList.contains(careerClass));
+
+    if (explicitCareer) {
+      return explicitCareer;
+    }
+
+    if (document.body.classList.contains("promo-index")) {
+      return "career-informatica";
+    }
+
+    return null;
   };
 
   const renderDefaultIntro = (data) => `
@@ -235,6 +245,12 @@ window.ITM.promoIntro = (() => {
   };
 
   const init = () => {
+    if (document.body.dataset.promoIntroStarted === "true") {
+      return;
+    }
+
+    document.body.dataset.promoIntroStarted = "true";
+
     const careerClass = getCareer();
     if (!careerClass) return;
 

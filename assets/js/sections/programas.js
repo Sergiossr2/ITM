@@ -6,24 +6,24 @@ window.ITM = window.ITM || {};
 window.ITM.sections = window.ITM.sections || {};
 
 window.ITM.sections.programas = {
-  eyebrow: "Bachilleratos",
-  title: "Formaci&oacute;n acad&eacute;mica con salida pr&aacute;ctica.",
-  text: "Cada bachillerato tiene un enfoque claro: aprender haciendo, desarrollar criterio y prepararse para estudiar, trabajar o emprender con mejores bases.",
+  eyebrow: "Lo que aprender&aacute;s",
+  title: "Habilidades que se pueden ver, probar y explicar.",
+  text: "La meta no es memorizar palabras t&eacute;cnicas. La meta es que puedas construir algo, defender c&oacute;mo funciona y mejorar con cada proyecto.",
   items: [
     {
-      code: "INF",
-      title: "Bachillerato en Inform&aacute;tica",
-      text: "Programaci&oacute;n, soporte, herramientas digitales y proyectos que convierten la tecnolog&iacute;a en soluciones reales."
+      code: "CODE",
+      title: "Programaci&oacute;n",
+      text: "Estructura, l&oacute;gica, resoluci&oacute;n de problemas y creaci&oacute;n de soluciones digitales sencillas pero reales."
     },
     {
-      code: "CF",
-      title: "Bachillerato en Contadur&iacute;a y Finanzas",
-      text: "Contabilidad, administraci&oacute;n, finanzas y emprendimiento para entender c&oacute;mo se organiza una idea de negocio."
+      code: "TECH",
+      title: "Soporte t&eacute;cnico",
+      text: "Diagn&oacute;stico b&aacute;sico, mantenimiento, organizaci&oacute;n, pruebas y uso responsable de herramientas."
     },
     {
-      code: "HUM",
-      title: "Bachillerato en Humanidades",
-      text: "Comunicaci&oacute;n, investigaci&oacute;n, pensamiento cr&iacute;tico y liderazgo para participar con voz propia."
+      code: "WEB",
+      title: "Creaci&oacute;n digital",
+      text: "Dise&ntilde;o, contenido, presentaciones, sitios y piezas digitales que pueden formar un portafolio."
     }
   ]
 };

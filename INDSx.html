@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bachillerato en Informática — Promo 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --radius: 10px;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #041012;
+      color: #fff;
+    }
+
+    /* ── Page content (shown after intro) ── */
+    .page-content {
+      display: grid;
+      place-items: center;
+      min-height: 100svh;
+      text-align: center;
+      padding: 40px 24px;
+      background: linear-gradient(135deg, #01070a, #031719 48%, #01070a);
+    }
+
+    .page-content h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: #67e8f9;
+      margin-bottom: 12px;
+    }
+
+    .page-content p {
+      color: rgba(255,255,255,.7);
+      font-size: 1.1rem;
+    }
+
+    /* ================================================================
+       INTRO BASE
+    ================================================================ */
+    .promo-intro-lock { overflow: hidden; }
+
+    .promo-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      min-height: 100svh;
+      padding: 24px;
+      color: var(--white);
+      background: #041012;
+      isolation: isolate;
+      animation: promo-intro-in 0.55s ease both;
+    }
+
+    .promo-intro-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-position: center;
+      background-size: cover;
+      transform: scale(1.05);
+      animation: promo-intro-zoom 3s ease-out both;
+    }
+
+    .promo-intro::before,
+    .promo-intro::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .promo-intro::before {
+      z-index: -1;
+      background:
+        linear-gradient(115deg, rgba(4,16,18,.94), rgba(15,118,110,.72) 48%, rgba(245,158,11,.26)),
+        linear-gradient(180deg, rgba(4,16,18,.12), rgba(4,16,18,.84));
+    }
+
+    .promo-intro::after {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+      opacity: .4;
+      transform: translateX(-100%);
+      animation: promo-intro-sweep 1.45s ease-in-out 0.35s both;
+    }
+
+    .promo-intro-exit { animation: promo-intro-out 0.62s ease both; }
+
+    /* ── Progress bar ── */
+    .promo-intro-progress {
+      height: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+    }
+
+    .promo-intro-progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2dd4bf, #fde68a, #f59e0b);
+      box-shadow: 0 0 22px rgba(45,212,191,.45);
+    }
+
+    .promo-intro-code {
+      display: inline-grid;
+      place-items: center;
+      min-width: 66px;
+      min-height: 38px;
+      padding: 6px 12px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: var(--radius);
+      background: rgba(245,158,11,.18);
+      color: #fde68a;
+      font-weight: 950;
+      font-size: 1.05rem;
+    }
+
+    .promo-intro-eyebrow,
+    .promo-intro-hype {
+      margin: 14px 0 0;
+      color: rgba(255,255,255,.74);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: .78rem;
+    }
+
+    /* ================================================================
+       LEGENDARY INF MODE
+    ================================================================ */
+    .promo-intro-inf {
+      place-items: stretch;
+      overflow: hidden;
+      padding: clamp(12px, 2vw, 24px);
+      background:
+        radial-gradient(circle at 50% 48%, rgba(45,212,191,.17), transparent 34rem),
+        linear-gradient(135deg, #01070a, #031719 48%, #01070a);
+    }
+
+    .promo-intro-inf .promo-intro-bg {
+      opacity: .22;
+      filter: saturate(.75) contrast(1.22) brightness(.55) blur(1px);
+      animation-duration: 6.8s;
+    }
+
+    .promo-intro-inf::before {
+      z-index: -1;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(103,232,249,.2), transparent 22rem),
+        radial-gradient(circle at 82% 70%, rgba(253,230,138,.13), transparent 20rem),
+        linear-gradient(115deg, rgba(1,7,10,.96), rgba(4,52,54,.82) 48%, rgba(1,7,10,.97));
+    }
+
+    .promo-intro-inf::after {
+      z-index: 3;
+      opacity: .18;
+      background: repeating-linear-gradient(180deg, rgba(255,255,255,.16) 0 1px, transparent 1px 5px);
+      transform: none;
+      animation: promo-scanline-roll 4s linear infinite;
+    }
+
+    /* Cinematic wrapper */
+    .promo-inf-cinematic {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto minmax(0,1fr) auto;
+      gap: 14px;
+      width: 100%;
+      min-height: calc(100svh - clamp(24px, 4vw, 48px));
+      color: #fff;
+    }
+
+    /* Aura */
+    .promo-inf-aura {
+      position: absolute;
+      inset: -20%;
+      z-index: -2;
+      background: conic-gradient(from 180deg, transparent, rgba(103,232,249,.14), transparent, rgba(253,230,138,.09), transparent);
+      filter: blur(26px);
+      opacity: .9;
+      animation: promo-aura-spin 9s linear infinite;
+    }
+
+    /* Grid */
+    .promo-intro-grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(103,232,249,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(103,232,249,.08) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(180deg, transparent, black 18%, black 76%, transparent);
+      opacity: .48;
+      animation: promo-grid-drift 4.3s linear both;
+    }
+
+    /* Code rain */
+    .promo-code-rain {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      color: rgba(183,255,243,.2);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: clamp(.78rem, 1vw, .96rem);
+      font-weight: 800;
+      pointer-events: none;
+    }
+
+    .promo-code-rain span {
+      position: absolute;
+      top: -10%;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      text-shadow: 0 0 18px rgba(103,232,249,.35);
+      animation: promo-code-fall 4.2s linear infinite;
+    }
+
+    .promo-code-rain span:nth-child(1) { left:  9%; animation-delay: .1s; }
+    .promo-code-rain span:nth-child(2) { left: 25%; animation-delay: .8s;  animation-duration: 5.2s; }
+    .promo-code-rain span:nth-child(3) { left: 68%; animation-delay: .35s; animation-duration: 4.8s; }
+    .promo-code-rain span:nth-child(4) { left: 84%; animation-delay: 1.2s; }
+    .promo-code-rain span:nth-child(5) { left: 52%; animation-delay: 1.6s; animation-duration: 5.6s; }
+    .promo-code-rain span:nth-child(6) { left: 39%; animation-delay: .55s; animation-duration: 4.6s; }
+    .promo-code-rain span:nth-child(7) { left: 93%; animation-delay: 1.05s; animation-duration: 5.8s; }
+    .promo-code-rain span:nth-child(8) { left: 16%; animation-delay: 2s;  animation-duration: 5s; }
+
+    /* HUD rings */
+    .promo-inf-hud {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .promo-inf-hud span {
+      position: absolute;
+      top: 50%; left: 50%;
+      aspect-ratio: 1;
+      width: min(74vmin, 720px);
+      border: 1px solid rgba(103,232,249,.14);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: inset 0 0 46px rgba(45,212,191,.08);
+      animation: promo-hud-spin 7s linear infinite;
+    }
+
+    .promo-inf-hud span:nth-child(2) { width: min(55vmin,520px); border-style: dashed; animation-direction: reverse; animation-duration: 5.5s; }
+    .promo-inf-hud span:nth-child(3) { width: min(34vmin,340px); border-color: rgba(253,230,138,.18); animation-duration: 4.4s; }
+    .promo-inf-hud span:nth-child(4) { width: min(88vmin,900px); border-color: rgba(52,211,153,.1); animation-direction: reverse; animation-duration: 10s; }
+
+    /* Statusbar */
+    .promo-inf-statusbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid rgba(103,232,249,.2);
+      border-radius: var(--radius);
+      background: rgba(2,9,11,.62);
+      color: rgba(255,255,255,.66);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: .78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      backdrop-filter: blur(16px);
+    }
+
+    .promo-inf-statusbar strong { color: #67e8f9; }
+
+    /* Layout */
+    .promo-inf-layout {
+      display: grid;
+      grid-template-columns: minmax(250px, .82fr) minmax(420px, 1.25fr) minmax(240px, .78fr);
+      align-items: center;
+      gap: 18px;
+      min-height: 0;
+      perspective: 1200px;
+    }
+
+    /* Editor panel */
+    .promo-inf-editor,
+    .promo-inf-diagnostics {
+      overflow: hidden;
+      border: 1px solid rgba(103,232,249,.24);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(3,20,24,.84), rgba(2,9,11,.74)),
+        rgba(2,9,11,.64);
+      box-shadow: 0 22px 70px rgba(0,0,0,.38), 0 0 42px rgba(45,212,191,.12);
+      backdrop-filter: blur(16px);
+    }
+
+    .promo-inf-editor {
+      transform: rotateY(7deg);
+      animation: promo-editor-in .9s ease .2s both;
+    }
+
+    .promo-shell-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(103,232,249,.16);
+      background: rgba(255,255,255,.05);
+    }
+
+    .promo-shell-bar span {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #67e8f9;
+      box-shadow: 0 0 16px rgba(103,232,249,.5);
+    }
+
+    .promo-shell-bar span:nth-child(2) { background: #fde68a; }
+    .promo-shell-bar span:nth-child(3) { background: #34d399; }
+
+    .promo-shell-bar strong {
+      margin-left: 8px;
+      color: rgba(255,255,255,.72);
+      font-size: .72rem;
+      letter-spacing: .04em;
+    }
+
+    .promo-code-editor {
+      padding: 16px 14px 12px;
+      border-bottom: 1px solid rgba(103,232,249,.14);
+      background:
+        linear-gradient(90deg, rgba(103,232,249,.06), transparent 46%),
+        rgba(255,255,255,.025);
+    }
+
+    .promo-code-line {
+      display: grid;
+      grid-template-columns: 32px minmax(0,1fr);
+      gap: 10px;
+      margin: 0 0 9px;
+      color: rgba(255,255,255,.48);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: clamp(.76rem, 1vw, .9rem);
+      font-weight: 800;
+      opacity: .52;
+      transform: translateX(-6px);
+      transition: opacity .22s ease, color .22s ease, transform .22s ease;
+    }
+
+    .promo-code-line span { color: rgba(103,232,249,.52); text-align: right; }
+    .promo-code-line code { min-width: 0; overflow: hidden; color: inherit; text-overflow: ellipsis; white-space: nowrap; }
+
+    .promo-code-line.is-lit {
+      color: #eafffb;
+      opacity: 1;
+      transform: translateX(0);
+      text-shadow: 0 0 16px rgba(103,232,249,.22);
+    }
+
+    /* Terminal */
+    .promo-inf-terminal { padding: 12px 14px 14px; }
+
+    .promo-inf-terminal p {
+      display: flex;
+      gap: 8px;
+      margin: 0 0 8px;
+      color: rgba(183,255,243,.68);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .promo-inf-terminal span { color: #67e8f9; }
+    .promo-inf-terminal strong { color: #eafffb; }
+    .promo-shell-active { color: #eafffb; }
+
+    .promo-terminal-text { min-width: 0; overflow: hidden; white-space: nowrap; }
+
+    .promo-terminal-cursor {
+      width: 8px;
+      height: 1.1em;
+      flex: 0 0 auto;
+      background: #fde68a;
+      box-shadow: 0 0 18px rgba(253,230,138,.55);
+      animation: promo-cursor-blink .72s steps(2, end) infinite;
+    }
+
+    /* Core / center panel */
+    .promo-inf-core {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      min-height: min(680px, calc(100svh - 140px));
+      padding: clamp(22px, 3.8vw, 42px);
+      overflow: hidden;
+      border: 1px solid rgba(103,232,249,.3);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(2,14,18,.9), rgba(9,65,68,.62)),
+        rgba(2,9,11,.7);
+      box-shadow: 0 34px 120px rgba(0,0,0,.58), 0 0 72px rgba(45,212,191,.2);
+      text-align: center;
+      animation: promo-core-rise .85s ease .18s both;
+      backdrop-filter: blur(18px);
+    }
+
+    .promo-inf-core::before,
+    .promo-inf-core::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .promo-inf-core::before {
+      inset: 0;
+      background: linear-gradient(180deg, transparent, rgba(103,232,249,.11), transparent);
+      transform: translateY(-110%);
+      animation: promo-panel-scan 2.2s ease-in-out .3s infinite;
+    }
+
+    .promo-inf-core::after {
+      inset: 12px;
+      border: 1px solid rgba(103,232,249,.14);
+      border-radius: calc(var(--radius) - 4px);
+      box-shadow: inset 0 0 46px rgba(103,232,249,.08);
+    }
+
+    .promo-inf-core .promo-inf-label,
+    .promo-inf-core h2,
+    .promo-inf-core .promo-intro-line,
+    .promo-inf-core .promo-inf-stages,
+    .promo-inf-core .promo-intro-skills,
+    .promo-inf-core .promo-progress-wrap,
+    .promo-inf-core .promo-intro-hype {
+      position: relative;
+      z-index: 2;
+    }
+
+    .promo-inf-core h2 {
+      max-width: 830px;
+      margin: 8px auto 12px;
+      color: #fff;
+      font-size: clamp(2.7rem, 6vw, 5.75rem);
+      line-height: .9;
+      text-wrap: balance;
+      text-shadow: 0 20px 46px rgba(0,0,0,.42), 0 0 28px rgba(103,232,249,.16);
+    }
+
+    .promo-inf-core h2::before,
+    .promo-inf-core h2::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .24;
+    }
+
+    .promo-inf-core h2::before {
+      color: #67e8f9;
+      transform: translate(2px,-1px);
+      clip-path: inset(0 0 55% 0);
+      animation: promo-title-glitch 2s steps(2, end) infinite;
+    }
+
+    .promo-inf-core h2::after {
+      color: #fde68a;
+      transform: translate(-2px,1px);
+      clip-path: inset(58% 0 0 0);
+      animation: promo-title-glitch 2.5s steps(2, end) infinite reverse;
+    }
+
+    .promo-inf-core .promo-intro-line {
+      max-width: 620px;
+      margin-bottom: 18px;
+      color: rgba(255,255,255,.76);
+      font-size: clamp(.98rem, 1.4vw, 1.18rem);
+    }
+
+    /* Kernel spinner */
+    .promo-inf-kernel {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: clamp(122px, 14vw, 184px);
+      height: clamp(122px, 14vw, 184px);
+      margin: 0 auto 18px;
+    }
+
+    .promo-inf-kernel span {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(103,232,249,.36);
+      clip-path: polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);
+      animation: promo-kernel-spin 5.6s linear infinite;
+    }
+
+    .promo-inf-kernel span:nth-child(2) { inset: 14px; border-color: rgba(253,230,138,.35); animation-direction: reverse; animation-duration: 4.4s; }
+    .promo-inf-kernel span:nth-child(3) { inset: 28px; border-color: rgba(52,211,153,.42); animation-duration: 3.2s; }
+
+    .promo-inf-kernel strong {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 58%;
+      height: 58%;
+      color: #fde68a;
+      font-size: clamp(2.1rem, 4.8vw, 4.25rem);
+      font-weight: 950;
+      line-height: 1;
+      text-shadow: 0 0 34px rgba(253,230,138,.4);
+    }
+
+    .promo-count-number { display: block; transform: translateY(-1px); }
+
+    /* Label */
+    .promo-inf-label {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto 14px;
+      padding: 6px;
+      border: 1px solid rgba(103,232,249,.18);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+    }
+
+    /* Stage pills */
+    .promo-inf-stages {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 7px;
+      margin: 0 auto 16px;
+    }
+
+    .promo-inf-stage-pill {
+      min-width: 0;
+      padding: 8px 6px;
+      border: 1px solid rgba(103,232,249,.16);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.055);
+      color: rgba(255,255,255,.5);
+      transition: border-color .22s ease, color .22s ease, background .22s ease, transform .22s ease;
+    }
+
+    .promo-inf-stage-pill b,
+    .promo-inf-stage-pill small { display: block; }
+
+    .promo-inf-stage-pill b { color: #fde68a; font-size: .72rem; }
+
+    .promo-inf-stage-pill small {
+      margin-top: 2px;
+      overflow: hidden;
+      font-size: .64rem;
+      font-weight: 950;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .promo-inf-stage-pill.is-active {
+      border-color: rgba(103,232,249,.5);
+      background: rgba(45,212,191,.13);
+      color: #eafffb;
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(103,232,249,.12);
+    }
+
+    /* Skills */
+    .promo-intro-skills {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 auto 18px;
+    }
+
+    .promo-intro-skills span {
+      padding: 7px 10px;
+      border: 1px solid rgba(103,232,249,.22);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.08);
+      color: #d7fffa;
+      font-size: .78rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    /* Progress wrap */
+    .promo-progress-wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 54px;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .promo-progress-percent {
+      color: #fde68a;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: .86rem;
+      font-weight: 950;
+      text-align: right;
+    }
+
+    .promo-inf-core .promo-intro-progress {
+      height: 14px;
+      border-color: rgba(103,232,249,.28);
+      background: rgba(255,255,255,.08);
+    }
+
+    .promo-inf-core .promo-intro-progress span {
+      background: linear-gradient(90deg, #67e8f9, #2dd4bf, #fde68a, #f59e0b);
+      box-shadow: 0 0 28px rgba(103,232,249,.48);
+    }
+
+    .promo-inf-core .promo-intro-hype {
+      position: relative;
+      z-index: 1;
+      color: #b7fff3;
+    }
+
+    /* Diagnostics panel */
+    .promo-inf-diagnostics {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-self: stretch;
+      padding: 16px;
+      transform: rotateY(-7deg);
+      animation: promo-diag-in .9s ease .28s both;
+    }
+
+    .promo-diag-title {
+      color: #67e8f9;
+      font-size: .78rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .promo-intro-module {
+      display: block;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid rgba(103,232,249,.2);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03)),
+        rgba(2,9,11,.32);
+      text-align: left;
+      transform: translateY(0);
+      transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+    }
+
+    .promo-intro-module b  { display: block; color: #fff; font-size: .98rem; }
+    .promo-intro-module small { display: block; margin-top: 2px; color: rgba(255,255,255,.58); font-size: .72rem; }
+    .promo-intro-module strong { display: block; color: #67e8f9; font-size: .78rem; }
+
+    .promo-intro-module i {
+      position: relative;
+      display: block;
+      height: 6px;
+      margin: 9px 0 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+    }
+
+    .promo-intro-module i::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--diag);
+      border-radius: inherit;
+      background: linear-gradient(90deg, #67e8f9, #34d399, #fde68a);
+      box-shadow: 0 0 16px rgba(103,232,249,.4);
+    }
+
+    .promo-intro-module.is-active {
+      border-color: rgba(52,211,153,.52);
+      box-shadow: 0 0 26px rgba(45,212,191,.14);
+      transform: translateY(-2px);
+    }
+
+    .promo-inf-diagnostics > p {
+      margin: auto 0 0;
+      color: rgba(255,255,255,.58);
+      font-size: .8rem;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    /* Final banner */
+    .promo-inf-final {
+      justify-self: center;
+      display: inline-grid;
+      gap: 2px;
+      min-width: min(430px, 100%);
+      padding: 10px 18px;
+      border: 1px solid rgba(253,230,138,.3);
+      border-radius: var(--radius);
+      background: rgba(2,9,11,.7);
+      color: #fde68a;
+      text-align: center;
+      transform: translateY(22px);
+      opacity: 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+      transition: opacity .3s ease, transform .3s ease;
+      backdrop-filter: blur(14px);
+    }
+
+    .promo-inf-final span {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: .74rem;
+      font-weight: 950;
+      letter-spacing: .12em;
+    }
+
+    .promo-inf-final strong {
+      color: #fff;
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+    }
+
+    .promo-intro-inf.is-final .promo-inf-final {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .promo-intro-inf.is-final .promo-inf-core {
+      border-color: rgba(253,230,138,.5);
+      box-shadow: 0 34px 120px rgba(0,0,0,.58), 0 0 88px rgba(253,230,138,.23);
+    }
+
+    /* ================================================================
+       KEYFRAMES
+    ================================================================ */
+    @keyframes promo-intro-in    { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes promo-intro-out   { to { opacity: 0; transform: scale(1.025); } }
+    @keyframes promo-intro-zoom  { to { transform: scale(1); } }
+    @keyframes promo-intro-sweep { to { transform: translateX(100%); } }
+
+    @keyframes promo-grid-drift {
+      from { background-position: 0 0; }
+      to   { background-position: 128px 96px; }
+    }
+
+    @keyframes promo-code-fall {
+      from { transform: translateY(-12vh); opacity: 0; }
+      12%, 82% { opacity: 1; }
+      to { transform: translateY(116vh); opacity: 0; }
+    }
+
+    @keyframes promo-aura-spin {
+      from { transform: rotate(0deg) scale(1); }
+      to   { transform: rotate(360deg) scale(1.04); }
+    }
+
+    @keyframes promo-scanline-roll {
+      from { background-position: 0 0; }
+      to   { background-position: 0 32px; }
+    }
+
+    @keyframes promo-hud-spin {
+      from { transform: translate(-50%,-50%) rotate(0deg); }
+      to   { transform: translate(-50%,-50%) rotate(360deg); }
+    }
+
+    @keyframes promo-core-rise {
+      from { opacity: 0; transform: translateY(18px) scale(.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes promo-kernel-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes promo-editor-in {
+      from { opacity: 0; transform: translateX(-26px) rotateY(14deg); }
+      to   { opacity: 1; transform: translateX(0) rotateY(7deg); }
+    }
+
+    @keyframes promo-diag-in {
+      from { opacity: 0; transform: translateX(26px) rotateY(-14deg); }
+      to   { opacity: 1; transform: translateX(0) rotateY(-7deg); }
+    }
+
+    @keyframes promo-panel-scan {
+      0%       { transform: translateY(-120%); }
+      55%, 100% { transform: translateY(120%); }
+    }
+
+    @keyframes promo-title-glitch {
+      0%, 78%, 100% { opacity: .12; transform: translate(0,0); }
+      82%           { opacity: .34; transform: translate(3px,-1px); }
+      86%           { opacity: .2;  transform: translate(-2px,1px); }
+    }
+
+    @keyframes promo-cursor-blink { 50% { opacity: 0; } }
+
+    @keyframes promo-count-pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.045); }
+    }
+  </style>
+</head>
+<body class="career-informatica">
+
+  <!-- Page content revealed after intro -->
+  <div class="page-content">
+    <h1>Bachillerato en Informática</h1>
+    <p>Promo 2026 — Los que construyeron esta página.</p>
+  </div>
+
+  <script>
+    window.ITM = window.ITM || {};
+
+    window.ITM.promoIntro = (() => {
+      const careers = {
+        "career-informatica": {
+          code: "INF",
+          image: "",           /* sin imagen externa — fondo sólido */
+          eyebrow: "Sistema Promo 2026",
+          title: "Bachillerato en Inform\u00e1tica",
+          line: "Los que hicieron esta p\u00e1gina. Los que convierten ideas en soluciones digitales.",
+          hype: "Arrancando la presentaci\u00f3n m\u00e1s pesada de la Promo 2026.",
+          legendary: true,
+          skills: ["HTML", "CSS", "JavaScript", "UI", "Debug", "Deploy"],
+          commands: [
+            "itm@promo2026:~$ init --team=informatica --mode=legendary",
+            "npm run build:promo -- --power=max --style=tech",
+            "git commit -m \"Los que programaron esta pagina\"",
+            "render --scene=presentacion --level=epico",
+            "deploy --origin=informatica --status=live"
+          ],
+          steps: [
+            "Inicializando sistema INF",
+            "Compilando identidad digital",
+            "Sincronizando equipo",
+            "Renderizando presentaci\u00f3n",
+            "Deploy exitoso"
+          ],
+          stages: [
+            ["01","BOOT"],["02","BUILD"],["03","SYNC"],["04","RENDER"],["05","LIVE"]
+          ],
+          diagnostics: [
+            ["Front-end","Interfaz lista","96%"],
+            ["L\u00f3gica","Soluciones activas","92%"],
+            ["Creatividad","Modo encendido","99%"],
+            ["Equipo","Promo INF conectada","100%"]
+          ],
+          codeLines: [
+            "const promo = \"Inform\u00e1tica 2026\";",
+            "import orgullo from \"./equipo.js\";",
+            "while (ideas.length) { crear(); }",
+            "debug(dudas).then(aprender);",
+            "deploy(site, \"hecho por nosotros\");"
+          ],
+          streams: [
+            "01001100","const promo = 2026;","npm run futuro","&lt;/html&gt;",
+            "deploy ok","while(true) crear();","git push origin orgullo","debug --focus"
+          ]
+        }
+      };
+
+      const getCareer = () =>
+        Object.keys(careers).find(c => document.body.classList.contains(c));
+
+      const renderLegendaryIntro = (data) => `
+        <div class="promo-intro-bg" style="background-image:url('${data.image}')"></div>
+        <div class="promo-inf-cinematic">
+          <div class="promo-inf-aura" aria-hidden="true"></div>
+          <div class="promo-intro-grid" aria-hidden="true"></div>
+          <div class="promo-code-rain" aria-hidden="true">
+            ${data.streams.map(s => `<span>${s}</span>`).join("")}
+          </div>
+          <div class="promo-inf-hud" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="promo-inf-statusbar" aria-hidden="true">
+            <strong>ITM // PROMO 2026</strong>
+            <span>mainframe: inform\u00e1tica</span>
+            <span>status: compiling</span>
+          </div>
+          <div class="promo-inf-layout">
+            <aside class="promo-inf-editor" aria-hidden="true">
+              <div class="promo-shell-bar">
+                <span></span><span></span><span></span>
+                <strong>promo2026/informatica/main.js</strong>
+              </div>
+              <div class="promo-code-editor">
+                ${data.codeLines.map((line,i) => `
+                  <p class="promo-code-line">
+                    <span>${String(i+1).padStart(2,"0")}</span>
+                    <code>${line}</code>
+                  </p>`).join("")}
+              </div>
+              <div class="promo-inf-terminal">
+                <p><span>&gt;</span> auth promo_2026</p>
+                <p><span>&gt;</span> load creatividad.dll</p>
+                <p><span>&gt;</span> mount proyectos/</p>
+                <p class="promo-shell-active"><span>&gt;</span>
+                  <strong class="promo-terminal-text"></strong>
+                  <i class="promo-terminal-cursor"></i>
+                </p>
+              </div>
+            </aside>
+
+            <main class="promo-inf-core">
+              <div class="promo-inf-kernel" aria-hidden="true">
+                <span></span><span></span><span></span>
+                <strong class="promo-count-number">3</strong>
+              </div>
+              <div class="promo-inf-label">
+                <span class="promo-intro-code">${data.code}</span>
+                <p class="promo-intro-eyebrow">${data.eyebrow}</p>
+              </div>
+              <h2 data-text="Bachillerato en Informatica">${data.title}</h2>
+              <p class="promo-intro-line">${data.line}</p>
+              <div class="promo-inf-stages">
+                ${data.stages.map(s => `
+                  <span class="promo-inf-stage-pill">
+                    <b>${s[0]}</b><small>${s[1]}</small>
+                  </span>`).join("")}
+              </div>
+              <div class="promo-intro-skills">
+                ${data.skills.map(s => `<span>${s}</span>`).join("")}
+              </div>
+              <div class="promo-progress-wrap">
+                <div class="promo-intro-progress" aria-label="Barra de carga"><span></span></div>
+                <strong class="promo-progress-percent">0%</strong>
+              </div>
+              <p class="promo-intro-hype">${data.hype}</p>
+            </main>
+
+            <aside class="promo-inf-diagnostics" aria-hidden="true">
+              <strong class="promo-diag-title">diagn\u00f3stico del sistema</strong>
+              ${data.diagnostics.map(d => `
+                <span class="promo-intro-module">
+                  <b>${d[0]}</b>
+                  <small>${d[1]}</small>
+                  <i style="--diag:${d[2]}"></i>
+                  <strong>${d[2]}</strong>
+                </span>`).join("")}
+              <p>Hecho por Inform\u00e1tica. Presentado por Promo 2026.</p>
+            </aside>
+          </div>
+          <div class="promo-inf-final" aria-hidden="true">
+            <span>DEPLOY COMPLETE</span>
+            <strong>Inform\u00e1tica se presenta.</strong>
+          </div>
+        </div>`;
+
+      const buildIntro = (data, careerClass) => {
+        const intro = document.createElement("div");
+        intro.className = `promo-intro promo-intro-inf`;
+        intro.setAttribute("role","status");
+        intro.setAttribute("aria-live","polite");
+        intro.innerHTML = renderLegendaryIntro(data);
+        intro.dataset.career = careerClass;
+        return intro;
+      };
+
+      const updateLegendaryIntro = (intro, data, elapsed, duration) => {
+        const percent   = Math.min(elapsed / duration, 1);
+        const stepIndex = Math.min(Math.floor(percent * data.steps.length), data.steps.length - 1);
+        const command   = data.commands[stepIndex] || data.commands[0];
+        const localStart = stepIndex / data.steps.length;
+        const localEnd   = (stepIndex + 1) / data.steps.length;
+        const localProg  = Math.min(Math.max((percent - localStart) / (localEnd - localStart), 0), 1);
+        const visLen     = Math.max(1, Math.floor(command.length * localProg));
+
+        const countdown      = intro.querySelector(".promo-count-number");
+        const hype           = intro.querySelector(".promo-intro-hype");
+        const terminalText   = intro.querySelector(".promo-terminal-text");
+        const stagePills     = intro.querySelectorAll(".promo-inf-stage-pill");
+        const codeLines      = intro.querySelectorAll(".promo-code-line");
+        const diagnostics    = intro.querySelectorAll(".promo-intro-module");
+        const progressPct    = intro.querySelector(".promo-progress-percent");
+
+        if (countdown) {
+          countdown.textContent =
+            percent > .86 ? "LIVE" :
+            percent > .66 ? "RUN"  :
+            String(Math.max(1, 3 - Math.floor(percent * 4)));
+        }
+
+        if (hype)          hype.textContent         = data.steps[stepIndex];
+        if (terminalText)  terminalText.textContent  = command.slice(0, visLen);
+        if (progressPct)   progressPct.textContent   = `${Math.round(percent * 100)}%`;
+
+        intro.dataset.phase = data.stages[stepIndex]?.[1]?.toLowerCase() || "";
+        intro.classList.toggle("is-final", percent > .86);
+
+        stagePills.forEach((s, i) => s.classList.toggle("is-active", i <= stepIndex));
+        codeLines.forEach( (l, i) => l.classList.toggle("is-lit",    i <= stepIndex));
+        diagnostics.forEach((d, i) => d.classList.toggle("is-active", i <= Math.min(stepIndex, diagnostics.length - 1)));
+      };
+
+      const init = () => {
+        const careerClass = getCareer();
+        if (!careerClass) return;
+
+        const data = careers[careerClass];
+        const intro = buildIntro(data, careerClass);
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const duration = reduceMotion ? 700 : 6800;
+
+        document.body.classList.add("promo-intro-lock");
+        document.body.appendChild(intro);
+
+        const progress = intro.querySelector(".promo-intro-progress span");
+        let start = null;
+
+        const tick = (ts) => {
+          if (!start) start = ts;
+          const elapsed = ts - start;
+          const pct = Math.min((elapsed / duration) * 100, 100);
+
+          if (progress) progress.style.width = `${pct}%`;
+          updateLegendaryIntro(intro, data, elapsed, duration);
+
+          if (elapsed < duration) {
+            requestAnimationFrame(tick);
+            return;
+          }
+
+          intro.classList.add("promo-intro-exit");
+          document.body.classList.remove("promo-intro-lock");
+          setTimeout(() => intro.remove(), 650);
+        };
+
+        requestAnimationFrame(tick);
+      };
+
+      return { init };
+    })();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      window.ITM.promoIntro.init();
+    });
+  </script>
+</body>
+</html>

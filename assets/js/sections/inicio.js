@@ -6,54 +6,54 @@ window.ITM = window.ITM || {};
 window.ITM.sections = window.ITM.sections || {};
 
 window.ITM.sections.inicio = {
-  eyebrow: "Admisiones abiertas 2026",
-  title: "Formaci&oacute;n t&eacute;cnica con car&aacute;cter, innovaci&oacute;n y prop&oacute;sito.",
+  eyebrow: "Hecho para quienes quieren crear",
+  title: "Inform&aacute;tica no se explica: se demuestra con proyectos.",
   lead:
-    "Preparamos j&oacute;venes capaces de pensar, crear y servir. Aqu&iacute; la disciplina, la tecnolog&iacute;a, los valores y el acompa&ntilde;amiento familiar se unen para construir un camino real hacia el futuro.",
+    "Esta carrera es para estudiantes que quieren programar, resolver problemas, crear contenido digital y dejar evidencia de lo que saben hacer. Aqu&iacute; la tecnolog&iacute;a se aprende construyendo.",
   actions: [
     {
-      label: "Iniciar matr&iacute;cula",
+      label: "Quiero estudiar Inform&aacute;tica",
       href: "#matricula",
       style: "button"
     },
     {
-      label: "Conocer Promo 2026",
-      href: "#promo2026",
+      label: "Ver logros",
+      href: "#logros",
       style: "button button-ghost"
     }
   ],
   stats: [
     {
-      label: "Trayectoria",
-      value: "18 a&ntilde;os",
-      text: "Educando con enfoque t&eacute;cnico y humano."
+      label: "Enfoque",
+      value: "Tech",
+      text: "C&oacute;digo, soporte, dise&ntilde;o digital y pensamiento l&oacute;gico."
     },
     {
-      label: "Vida estudiantil",
-      value: "12+",
-      text: "Actividades acad&eacute;micas, deportivas y culturales por semestre."
+      label: "Pr&aacute;ctica",
+      value: "100%",
+      text: "Cada habilidad apunta a una entrega que se pueda mostrar."
     },
     {
-      label: "Comunidad",
-      value: "95%",
-      text: "Participaci&oacute;n activa de familias y docentes."
+      label: "Futuro",
+      value: "3 rutas",
+      text: "Estudiar, trabajar o emprender con bases tecnol&oacute;gicas."
     }
   ],
   quickInfo: [
     {
       number: "01",
-      title: "Matr&iacute;cula guiada",
-      text: "Requisitos claros, fechas visibles y atenci&oacute;n directa."
+      title: "Crea desde cero",
+      text: "Empieza con bases claras y avanza hacia proyectos visibles."
     },
     {
       number: "02",
-      title: "Aprendizaje pr&aacute;ctico",
-      text: "Proyectos, talleres y competencias aplicadas."
+      title: "Deja evidencia",
+      text: "Cada trabajo puede convertirse en parte de tu portafolio."
     },
     {
       number: "03",
-      title: "Vida escolar activa",
-      text: "Avisos, actividades y momentos destacados en un solo lugar."
+      title: "Piensa como t&eacute;cnico",
+      text: "Construye bases para universidad, empleo t&eacute;cnico o emprendimientos digitales."
     }
   ]
 };
