@@ -150,7 +150,7 @@ window.ITM.promoIntro = (() => {
             <span class="promo-intro-code">${data.code}</span>
             <p class="promo-intro-eyebrow">${data.eyebrow}</p>
           </div>
-          <h2 data-text="Bachillerato en Informatica">${data.title}</h2>
+          <h2 data-text="Bachillerato en Informática">${data.title}</h2>
           <p class="promo-intro-line">${data.line}</p>
           <div class="promo-inf-stages">
             ${data.stages.map((stage) => `

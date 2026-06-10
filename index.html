@@ -61,7 +61,13 @@
         </span>
       </a>
 
-      <nav class="nav" aria-label="Navegacion principal">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="mainNav" class="nav" aria-label="Navegacion principal">
         <a href="#logros">Logros</a>
         <a href="#proceso">Proceso</a>
         <a href="#habilidades">Habilidades</a>
@@ -490,6 +496,26 @@
           document.documentElement.dataset.theme = nextTheme;
           localStorage.setItem("informatica-theme", nextTheme);
           button.setAttribute("aria-pressed", String(nextTheme === "dark"));
+        });
+
+        const menuToggle = document.getElementById("menuToggle");
+        const mainNav = document.getElementById("mainNav");
+        const closeMenu = () => {
+          mainNav?.classList.remove("open");
+          menuToggle?.setAttribute("aria-expanded", "false");
+        };
+
+        menuToggle?.addEventListener("click", () => {
+          const isOpen = mainNav?.classList.toggle("open");
+          menuToggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+        });
+
+        mainNav?.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 760) closeMenu();
         });
 
         const openButtons = document.querySelectorAll(".student-open");

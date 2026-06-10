@@ -191,6 +191,43 @@ summary:focus-visible {
   color: var(--white);
 }
 
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-solid);
+  color: var(--primary-strong);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
 .theme-toggle {
   flex: 0 0 auto;
   justify-self: end;
@@ -237,6 +274,7 @@ summary:focus-visible {
   place-items: center;
   min-height: 100svh;
   padding: 24px;
+  overflow-y: auto;
   color: #ffffff;
   background: #041012;
   isolation: isolate;
@@ -366,7 +404,7 @@ summary:focus-visible {
 
 .promo-intro-inf {
   place-items: stretch;
-  overflow: hidden;
+  overflow: auto;
   padding: clamp(12px, 2vw, 24px);
   background:
     radial-gradient(circle at 50% 48%, rgba(45, 212, 191, 0.14), transparent 34rem),
@@ -403,6 +441,7 @@ summary:focus-visible {
   gap: 14px;
   width: 100%;
   min-height: calc(100svh - clamp(24px, 4vw, 48px));
+  max-height: none;
   color: #ffffff;
 }
 
@@ -673,25 +712,7 @@ summary:focus-visible {
 
 .promo-inf-core h2::before,
 .promo-inf-core h2::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.24;
-}
-
-.promo-inf-core h2::before {
-  color: #67e8f9;
-  transform: translate(2px, -1px);
-  clip-path: inset(0 0 55% 0);
-  animation: promo-title-glitch 2s steps(2, end) infinite;
-}
-
-.promo-inf-core h2::after {
-  color: #fde68a;
-  transform: translate(-2px, 1px);
-  clip-path: inset(58% 0 0 0);
-  animation: promo-title-glitch 2.5s steps(2, end) infinite reverse;
+  content: none;
 }
 
 .promo-inf-core .promo-intro-line {
@@ -2016,20 +2037,43 @@ summary:focus-visible {
 
 @media (max-width: 760px) {
   .topbar {
-    position: static;
-    grid-template-columns: minmax(0, 1fr) auto;
+    position: sticky;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 10px;
   }
 
+  .menu-toggle {
+    display: inline-flex;
+  }
+
   .nav {
-    grid-column: 1 / -1;
-    justify-self: stretch;
-    width: 100%;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 12px;
+    right: 12px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: flex-start;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: thin;
+    gap: 6px;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--bg-strong) 96%, transparent);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  .nav a {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    justify-content: flex-start;
   }
 
   .nav a {
@@ -2089,6 +2133,7 @@ summary:focus-visible {
 @media (max-width: 640px) {
   .promo-intro {
     padding: 8px;
+    overflow: hidden;
   }
 
   .promo-intro-inf {
@@ -2096,45 +2141,115 @@ summary:focus-visible {
   }
 
   .promo-inf-cinematic {
-    min-height: 100svh;
-    gap: 10px;
+    min-height: calc(100svh - 16px);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 8px;
   }
 
   .promo-inf-statusbar {
-    flex-wrap: wrap;
-    font-size: 0.72rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    min-height: 34px;
+    padding: 8px 10px;
+    font-size: 0.64rem;
+    line-height: 1.2;
+  }
+
+  .promo-inf-statusbar span:last-child {
+    display: none;
   }
 
   .promo-inf-editor,
-  .promo-inf-diagnostics,
+  .promo-inf-diagnostics {
+    display: none;
+  }
+
+  .promo-inf-layout {
+    min-height: 0;
+    display: grid;
+    align-items: center;
+  }
+
   .promo-inf-core {
     border-radius: 14px;
   }
 
   .promo-inf-core {
-    padding: 16px;
+    min-height: 0;
+    padding: clamp(14px, 4vw, 18px);
+    align-content: center;
   }
 
   .promo-inf-core h2 {
-    font-size: clamp(1.8rem, 10vw, 2.6rem);
-    line-height: 1.02;
+    margin-top: 4px;
+    font-size: clamp(1.9rem, 10.5vw, 2.72rem);
+    line-height: 0.98;
   }
 
   .promo-inf-core .promo-intro-line {
-    font-size: 0.95rem;
+    max-width: 30rem;
+    margin-bottom: 12px;
+    font-size: clamp(0.84rem, 3.2vw, 0.96rem);
+    line-height: 1.35;
+  }
+
+  .promo-inf-kernel {
+    width: clamp(82px, 24vw, 112px);
+    height: clamp(82px, 24vw, 112px);
+    margin-bottom: 10px;
+  }
+
+  .promo-inf-kernel span:nth-child(2) {
+    inset: 10px;
+  }
+
+  .promo-inf-kernel span:nth-child(3) {
+    inset: 20px;
+  }
+
+  .promo-inf-kernel strong {
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
+  }
+
+  .promo-inf-label {
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 5px;
+  }
+
+  .promo-inf-label .promo-intro-eyebrow {
+    margin: 0;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+
+  .promo-inf-label .promo-intro-code {
+    min-height: 28px;
+    padding: 5px 8px;
+    font-size: 0.68rem;
   }
 
   .promo-inf-stages {
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .promo-inf-stage-pill {
+    padding: 5px 3px;
+  }
+
+  .promo-inf-stage-pill b {
+    font-size: 0.62rem;
   }
 
   .promo-inf-stage-pill small {
-    font-size: 0.56rem;
+    font-size: 0.46rem;
   }
 
   .promo-intro-skills {
     gap: 6px;
+    margin-bottom: 12px;
   }
 
   .promo-intro-skills span {
@@ -2142,9 +2257,33 @@ summary:focus-visible {
     padding: 6px 8px;
   }
 
+  .promo-progress-wrap {
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 8px;
+  }
+
+  .promo-inf-core .promo-intro-progress {
+    height: 10px;
+    margin-top: 0;
+  }
+
+  .promo-progress-percent {
+    font-size: 0.74rem;
+  }
+
+  .promo-inf-core .promo-intro-hype {
+    margin-top: 10px;
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+  }
+
+  .promo-inf-final {
+    display: none;
+  }
+
   .promo-code-rain,
   .promo-inf-hud {
-    opacity: 0.35;
+    opacity: 0.22;
   }
 
   .promo-code-line {

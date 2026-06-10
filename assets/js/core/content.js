@@ -13,37 +13,37 @@ window.ITM.content = {
     {
       id: "top",
       hash: "#top",
-      title: "Bachillerato en Informatica | Estudia tecnologia"
+      title: "Bachillerato en Informática | Estudia tecnología"
     },
     {
       id: "promo2026",
       hash: "#promo2026",
-      title: "La carrera | Bachillerato en Informatica"
+      title: "La carrera | Bachillerato en Informática"
     },
     {
       id: "logros",
       hash: "#logros",
-      title: "Logros | Bachillerato en Informatica"
+      title: "Logros | Bachillerato en Informática"
     },
     {
       id: "programas",
       hash: "#programas",
-      title: "Lo que aprenderas | Bachillerato en Informatica"
+      title: "Lo que aprenderás | Bachillerato en Informática"
     },
     {
       id: "matricula",
       hash: "#matricula",
-      title: "Inscripcion | Bachillerato en Informatica"
+      title: "Inscripción | Bachillerato en Informática"
     },
     {
       id: "faq",
       hash: "#faq",
-      title: "Preguntas frecuentes | Bachillerato en Informatica"
+      title: "Preguntas frecuentes | Bachillerato en Informática"
     },
     {
       id: "contacto",
       hash: "#contacto",
-      title: "Contacto | Bachillerato en Informatica"
+      title: "Contacto | Bachillerato en Informática"
     }
   ],
 
