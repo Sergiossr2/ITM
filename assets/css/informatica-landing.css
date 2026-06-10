@@ -1969,6 +1969,30 @@ summary:focus-visible {
 }
 
 @media (max-width: 1040px) {
+  .promo-inf-layout {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .promo-inf-editor,
+  .promo-inf-diagnostics {
+    transform: none;
+    animation: none;
+  }
+
+  .promo-inf-core {
+    min-height: auto;
+    padding: clamp(18px, 4vw, 28px);
+  }
+
+  .promo-inf-core h2 {
+    font-size: clamp(2rem, 8vw, 3.4rem);
+  }
+
+  .promo-inf-stages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .hero,
   .portfolio-layout,
   .identity-panel,
@@ -2059,6 +2083,77 @@ summary:focus-visible {
   .button,
   .hero-actions .button {
     width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .promo-intro {
+    padding: 8px;
+  }
+
+  .promo-intro-inf {
+    padding: 8px;
+  }
+
+  .promo-inf-cinematic {
+    min-height: 100svh;
+    gap: 10px;
+  }
+
+  .promo-inf-statusbar {
+    flex-wrap: wrap;
+    font-size: 0.72rem;
+  }
+
+  .promo-inf-editor,
+  .promo-inf-diagnostics,
+  .promo-inf-core {
+    border-radius: 14px;
+  }
+
+  .promo-inf-core {
+    padding: 16px;
+  }
+
+  .promo-inf-core h2 {
+    font-size: clamp(1.8rem, 10vw, 2.6rem);
+    line-height: 1.02;
+  }
+
+  .promo-inf-core .promo-intro-line {
+    font-size: 0.95rem;
+  }
+
+  .promo-inf-stages {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .promo-inf-stage-pill small {
+    font-size: 0.56rem;
+  }
+
+  .promo-intro-skills {
+    gap: 6px;
+  }
+
+  .promo-intro-skills span {
+    font-size: 0.68rem;
+    padding: 6px 8px;
+  }
+
+  .promo-code-rain,
+  .promo-inf-hud {
+    opacity: 0.35;
+  }
+
+  .promo-code-line {
+    grid-template-columns: 26px minmax(0, 1fr);
+    font-size: 0.68rem;
+  }
+
+  .promo-inf-terminal p {
+    font-size: 0.7rem;
   }
 }
 
