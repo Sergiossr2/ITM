@@ -1,7 +1,7 @@
 {
-  "name": "Instituto Técnico Morazán",
-  "short_name": "ITM",
-  "description": "Formación técnica con carácter, innovación y propósito.",
+  "name": "Informática ITM Promo 2026",
+  "short_name": "Info ITM",
+  "description": "Memoria digital de Informática del Instituto Técnico Morazán Promo 2026.",
   "start_url": "/",
   "display": "browser",
   "background_color": "#edf5f3",

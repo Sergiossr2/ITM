@@ -7,22 +7,22 @@ window.ITM.sections = window.ITM.sections || {};
 
 window.ITM.sections.contacto = {
   finalCta: {
-    eyebrow: "Cupos disponibles",
-    title: "Tu carrera tecnol&oacute;gica puede empezar aqu&iacute;.",
-    text: "Pregunta por requisitos, horarios, costos y cupos para estudiar Bachillerato en Inform&aacute;tica.",
-    label: "Escribir por WhatsApp",
-    href: "https://wa.me/50425572360?text=Hola%2C%20quiero%20informaci%C3%B3n%20para%20estudiar%20Bachillerato%20en%20Inform%C3%A1tica."
+    eyebrow: "Identidad de Inform&aacute;tica",
+    title: "Cuando llegue la mascota, esta p&aacute;gina va a tener rostro propio.",
+    text: "Este espacio ya queda preparado para crecer con logo, fotos, proyectos y recuerdos de la Promo 2026.",
+    label: "Enviar aporte",
+    href: "https://wa.me/50495033358?text=Hola%2C%20quiero%20aportar%20contenido%20para%20Inform%C3%A1tica%20ITM%20Promo%202026."
   },
   footer: {
-    name: "Bachillerato en Inform&aacute;tica",
-    tagline: "Estudia tecnolog&iacute;a con prop&oacute;sito",
-    title: "Hablemos de tu inscripci&oacute;n a Inform&aacute;tica.",
+    name: "Inform&aacute;tica ITM",
+    tagline: "Instituto T&eacute;cnico Moraz&aacute;n &middot; Promo 2026",
+    title: "Hablemos de proyectos, recuerdos e identidad.",
     text:
-      "Recibe informaci&oacute;n clara sobre cupos, requisitos, horarios y el proceso para empezar esta carrera.",
+      "Esta p&aacute;gina es una vitrina de Inform&aacute;tica del Instituto T&eacute;cnico Moraz&aacute;n: una memoria digital que puede crecer con fotos, ideas, enlaces, videos y aportes del grupo.",
     actions: [
       {
-        label: "Escribir por WhatsApp",
-        href: "https://wa.me/50425572360?text=Hola%2C%20quiero%20informaci%C3%B3n%20para%20estudiar%20Bachillerato%20en%20Inform%C3%A1tica.",
+        label: "Enviar aporte",
+        href: "https://wa.me/50495033358?text=Hola%2C%20quiero%20aportar%20contenido%20para%20Inform%C3%A1tica%20ITM%20Promo%202026.",
         className: "button",
         external: true
       },
@@ -36,18 +36,18 @@ window.ITM.sections.contacto = {
     cards: [
       {
         label: "Tel&eacute;fono",
-        value: "2557-2360 / 2553-2360",
-        text: "Consulta cupos y requisitos de Inform&aacute;tica."
+        value: "9503-3358",
+        text: "Contacto para aportes de Inform&aacute;tica."
       },
       {
         label: "Correo",
         value: "inst.morazan@hotmail.com",
-        text: "Solicita informaci&oacute;n de la carrera."
+        text: "Aportes, dudas y coordinaci&oacute;n."
       },
       {
         label: "Direcci&oacute;n",
         value: "Bo. Guamilito, 5-6 calle, 2 avenida, San Pedro Sula",
-        text: "Visitas para conocer el proceso de inscripci&oacute;n."
+        text: "Instituto T&eacute;cnico Moraz&aacute;n."
       },
       {
         label: "Horario",
@@ -55,32 +55,44 @@ window.ITM.sections.contacto = {
         text: "Domingo cerrado."
       }
     ],
-    servicesTitle: "En esta p&aacute;gina",
+    servicesTitle: "Secciones",
     services: [
       {
-        label: "La carrera",
+        label: "Promo 2026",
         href: "#promo2026"
       },
       {
-        label: "Logros de Inform&aacute;tica",
-        href: "#logros"
+        label: "Laboratorio",
+        href: "#laboratorio"
       },
       {
-        label: "Lo que aprender&aacute;s",
+        label: "Alumnos",
+        href: "#alumnos"
+      },
+      {
+        label: "Inform&aacute;tica",
         href: "#programas"
       },
       {
-        label: "Inscripci&oacute;n 2026",
-        href: "#matricula"
+        label: "Comunicados",
+        href: "#noticias"
+      },
+      {
+        label: "Recuerdos",
+        href: "#recuerdos"
       },
       {
         label: "Preguntas frecuentes",
         href: "#faq"
+      },
+      {
+        label: "Contacto",
+        href: "#contacto"
       }
     ],
-    noteTitle: "Elige Inform&aacute;tica",
-    noteText: "Una carrera para aprender tecnolog&iacute;a, crear soluciones y prepararte para nuevas oportunidades.",
-    legal: "Bachillerato en Inform&aacute;tica. Todos los derechos reservados.",
-    slogan: "Tecnolog&iacute;a, proyectos y futuro."
+    noteTitle: "Recuerdo ITM",
+    noteText: "Somos Inform&aacute;tica del Instituto T&eacute;cnico Moraz&aacute;n: tecnolog&iacute;a, compa&ntilde;erismo y una Promo 2026 que quiere dejar huella.",
+    legal: "Inform&aacute;tica ITM Promo 2026. Todos los derechos reservados.",
+    slogan: "C&oacute;digo, memoria y futuro."
   }
 };

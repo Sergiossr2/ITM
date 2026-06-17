@@ -1,55 +1,60 @@
 /* =========================================================
-   Contenido: promo 2026 / bachilleratos
+   Contenido: promo 2026 / informatica
    ========================================================= */
 
 window.ITM = window.ITM || {};
 window.ITM.sections = window.ITM.sections || {};
 
 window.ITM.sections.promo2026 = {
-  eyebrow: "La carrera",
-  title: "Una carrera para construir, probar y presentar.",
+  eyebrow: "Promo 2026 &middot; Inform&aacute;tica",
+  title: "Una memoria digital para que esta generaci&oacute;n quede completa.",
   text:
-    "Inform&aacute;tica combina creatividad y t&eacute;cnica: aprendes a entender problemas, usar herramientas digitales y convertir ideas en algo que otros puedan ver, probar o utilizar.",
+    "Un espacio para guardar recuerdos, proyectos, frases, fotos autorizadas y momentos de Inform&aacute;tica con una identidad propia.",
   spotlight: {
-    kicker: "La idea central",
-    title: "No se trata solo de usar computadoras. Se trata de crear con ellas.",
+    kicker: "Anuario digital",
+    title: "Inform&aacute;tica 2026 en primera plana.",
     text:
-      "Un estudiante de Inform&aacute;tica puede organizar informaci&oacute;n, dise&ntilde;ar una p&aacute;gina, preparar contenido, resolver fallas b&aacute;sicas y explicar una soluci&oacute;n con criterio. Esa combinaci&oacute;n es la que vuelve valiosa la carrera.",
-    ideas: ["C&oacute;digo", "Soporte", "Dise&ntilde;o", "Portafolio"]
+      "Aqu&iacute; la promoci&oacute;n puede mostrar lo que realmente la representa: c&oacute;digo, compa&ntilde;erismo, risas, retos, logros y esas historias que solo entiende el grupo.",
+    countdown: {
+      target: "2026-11-15T18:00:00-06:00",
+      label: "Rumbo a la graduaci&oacute;n",
+      note: "Fecha tentativa: noviembre 2026"
+    },
+    ideas: ["Perfiles", "Proyectos", "Recuerdos", "Mascota", "TikToks"]
   },
   items: [
     {
       code: "INF",
-      badge: "Crear",
-      title: "Programar ideas",
+      badge: "Tecnolog&iacute;a",
+      title: "Bachillerato en Inform&aacute;tica",
       text:
-        "Ordenar un problema, dividirlo en pasos y convertirlo en una soluci&oacute;n digital.",
+        "Ideas, c&oacute;digo, soporte y proyectos digitales con sello propio de la Promo 2026.",
       image: "assets/img/promo2026/informatica/hero/hero-preview.png",
       imageAlt: "Estudiantes de Inform&aacute;tica trabajando en proyectos tecnol&oacute;gicos.",
-      href: "#matricula",
-      cta: "Quiero inscribirme"
+      href: "bachillerato-informatica.html",
+      cta: "Ver Inform&aacute;tica"
     },
     {
-      code: "LAB",
-      badge: "Resolver",
-      title: "Resolver fallas",
+      code: "LOG",
+      badge: "Identidad",
+      title: "Mascota y logo de Inform&aacute;tica",
       text:
-        "Aprender diagn&oacute;stico, orden, pruebas y uso responsable de herramientas t&eacute;cnicas.",
-      image: "assets/img/brand/logo-promo-2026-web.svg",
-      imageAlt: "Logo de la Promo 2026 usado como identidad digital.",
-      href: "#programas",
-      cta: "Ver habilidades"
-    },
-    {
-      code: "WEB",
-      badge: "Presentar",
-      title: "Mostrar resultados",
-      text:
-        "Crear trabajos que puedan quedar como evidencia: p&aacute;ginas, dise&ntilde;os, contenido y soluciones.",
+        "Cuando el logo est&eacute; listo, esta tarjeta puede convertirse en la entrada oficial a la identidad visual de la promo.",
       image: "assets/img/promo2026/informatica/hero/hero-preview.png",
-      imageAlt: "Proyecto visual de Inform&aacute;tica presentado como evidencia digital.",
-      href: "#logros",
-      cta: "Ver logros"
+      imageAlt: "Espacio reservado para la mascota de Inform&aacute;tica.",
+      href: "#recuerdos",
+      cta: "Ver plan"
+    },
+    {
+      code: "MEM",
+      badge: "Recuerdos",
+      title: "Galer&iacute;a de momentos",
+      text:
+        "Un lugar para guardar fotos autorizadas, frases, actividades, viajes y peque&ntilde;os momentos que hicieron grupo.",
+      image: "assets/img/pages/hero-campus.png",
+      imageAlt: "Recuerdos de la Promo 2026 de Inform&aacute;tica.",
+      href: "#noticias",
+      cta: "Ver noticias"
     }
   ]
 };

@@ -13,37 +13,52 @@ window.ITM.content = {
     {
       id: "top",
       hash: "#top",
-      title: "Bachillerato en Informática | Estudia tecnología"
+      title: "Inicio | Informatica ITM"
     },
     {
       id: "promo2026",
       hash: "#promo2026",
-      title: "La carrera | Bachillerato en Informática"
+      title: "Promo 2026 | Informatica ITM"
     },
     {
-      id: "logros",
-      hash: "#logros",
-      title: "Logros | Bachillerato en Informática"
+      id: "laboratorio",
+      hash: "#laboratorio",
+      title: "Laboratorio | Informatica ITM"
+    },
+    {
+      id: "alumnos",
+      hash: "#alumnos",
+      title: "Alumnos | Informatica ITM"
     },
     {
       id: "programas",
       hash: "#programas",
-      title: "Lo que aprenderás | Bachillerato en Informática"
+      title: "Informatica | ITM"
     },
     {
-      id: "matricula",
-      hash: "#matricula",
-      title: "Inscripción | Bachillerato en Informática"
+      id: "noticias",
+      hash: "#noticias",
+      title: "Noticias | Informatica ITM"
+    },
+    {
+      id: "actividades",
+      hash: "#actividades",
+      title: "Actividades | Informatica ITM"
+    },
+    {
+      id: "recuerdos",
+      hash: "#recuerdos",
+      title: "Recuerdos | Informatica ITM"
     },
     {
       id: "faq",
       hash: "#faq",
-      title: "Preguntas frecuentes | Bachillerato en Informática"
+      title: "Preguntas frecuentes | Informatica ITM"
     },
     {
       id: "contacto",
       hash: "#contacto",
-      title: "Contacto | Bachillerato en Informática"
+      title: "Contacto | Informatica ITM"
     }
   ],
 

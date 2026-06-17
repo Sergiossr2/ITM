@@ -7,28 +7,28 @@ window.ITM.sections = window.ITM.sections || {};
 
 window.ITM.sections.faq = {
   eyebrow: "Preguntas frecuentes",
-  title: "Dudas antes de estudiar Inform&aacute;tica.",
-  text: "Respuestas directas para estudiantes y familias que est&aacute;n considerando esta carrera.",
+  title: "Dudas sobre la presentaci&oacute;n de Inform&aacute;tica.",
+  text: "Respuestas r&aacute;pidas para entender el enfoque de esta p&aacute;gina y c&oacute;mo puede crecer con la Promo 2026.",
   items: [
     {
-      question: "&iquest;Necesito saber programar antes de entrar?",
+      question: "&iquest;Esta p&aacute;gina es solo de Inform&aacute;tica?",
       answer:
-        "No. La carrera est&aacute; pensada para formar bases desde el inicio. Lo importante es tener curiosidad, disciplina y ganas de aprender tecnolog&iacute;a."
+        "S&iacute;. El contenido principal est&aacute; enfocado solamente en Inform&aacute;tica, sus proyectos, noticias, actividades y recuerdos de la Promo 2026."
     },
     {
-      question: "&iquest;Qu&eacute; puedo hacer despu&eacute;s de estudiar Inform&aacute;tica?",
+      question: "&iquest;Se puede agregar el logo con la mascota?",
       answer:
-        "Puedes continuar estudios universitarios, buscar oportunidades t&eacute;cnicas, apoyar proyectos digitales o emprender con servicios relacionados con tecnolog&iacute;a."
+        "S&iacute;. Cuando tengas el logo de la mascota de Inform&aacute;tica, se puede integrar en la cabecera, el hero, el favicon o una secci&oacute;n especial de identidad."
     },
     {
-      question: "&iquest;La carrera es solo para quienes aman las computadoras?",
+      question: "&iquest;Qu&eacute; recuerdos se pueden publicar?",
       answer:
-        "No solo. Tambi&eacute;n es para quienes quieren aprender a resolver problemas, organizar ideas, crear contenido, trabajar en equipo y usar herramientas digitales con criterio."
+        "Fotos autorizadas, frases, proyectos, logros, videos cortos, momentos de clase y actividades que representen al grupo con respeto."
     },
     {
-      question: "&iquest;C&oacute;mo pido informaci&oacute;n para inscribirme?",
+      question: "&iquest;D&oacute;nde se publican noticias y comunicados?",
       answer:
-        "Usa el bot&oacute;n de WhatsApp o la secci&oacute;n de contacto para preguntar por cupos, requisitos, horarios y pasos de inscripci&oacute;n para Bachillerato en Inform&aacute;tica."
+        "Los avisos y momentos destacados se pueden mantener en la secci&oacute;n de noticias de esta misma p&aacute;gina."
     }
   ]
 };

@@ -1,0 +1,1646 @@
+ANIMACION INTRO INFORMATICA - PROMO 2026
+===========================================
+
+Este archivo guarda el codigo base de la intro mas perra de Informatica.
+Sirve como respaldo para copiarla a otro proyecto o restaurarla si se toca algo.
+
+DEBE CONTENER
+-------------
+1. En la pagina HTML de Informatica, el body debe tener la clase:
+   career-informatica
+
+2. La pagina debe cargar este script antes de cerrar el body:
+   <script src="assets/js/core/promo-intro.js" defer></script>
+
+3. El JavaScript debe tener:
+   - La configuracion career-informatica con legendary: true.
+   - renderLegendaryIntro(data), que arma la escena.
+   - updateLegendaryIntro(intro, data, elapsed, duration), que anima fases, terminal, countdown y progreso.
+   - init(), que inserta la intro al cargar la pagina.
+
+4. El CSS debe tener:
+   - La base .promo-intro y .promo-intro-lock.
+   - El modo exclusivo .promo-intro-inf.
+   - La escena .promo-inf-cinematic.
+   - El editor .promo-inf-editor.
+   - El centro .promo-inf-core y .promo-inf-kernel.
+   - Los diagnosticos .promo-inf-diagnostics.
+   - Keyframes: promo-aura-spin, promo-scanline-roll, promo-hud-spin, promo-core-rise, promo-kernel-spin,
+     promo-editor-in, promo-diag-in, promo-panel-scan, promo-title-glitch, promo-code-fall.
+
+5. Assets necesarios:
+   - assets/img/promo2026/informatica/hero/hero-preview.png
+   - assets/img/brand/logo-promo-2026-web.svg solo para las intros normales de otras promos.
+
+CODIGO JS - assets/js/core/promo-intro.js
+-----------------------------------------
+
+```js
+/* =========================================================
+   Intro animada para paginas de la Promo 2026
+   ========================================================= */
+
+window.ITM = window.ITM || {};
+
+window.ITM.promoIntro = (() => {
+  const careers = {
+    "career-informatica": {
+      code: "INF",
+      image: "assets/img/promo2026/informatica/hero/hero-preview.png",
+      eyebrow: "Sistema Promo 2026",
+      title: "Bachillerato en Inform&aacute;tica",
+      line: "Los que hicieron esta p&aacute;gina. Los que convierten ideas en soluciones digitales.",
+      hype: "Arrancando la presentaci&oacute;n m&aacute;s pesada de la Promo 2026.",
+      legendary: true,
+      skills: ["HTML", "CSS", "JavaScript", "UI", "Debug", "Deploy"],
+      commands: [
+        "itm@promo2026:~$ init --team=informatica --mode=legendary",
+        "npm run build:promo -- --power=max --style=tech",
+        "git commit -m \"Los que programaron esta pagina\"",
+        "render --scene=presentacion --level=epico",
+        "deploy --origin=informatica --status=live"
+      ],
+      steps: [
+        "Inicializando sistema INF",
+        "Compilando identidad digital",
+        "Sincronizando equipo",
+        "Renderizando presentaci&oacute;n",
+        "Deploy exitoso"
+      ],
+      stages: [
+        ["01", "BOOT"],
+        ["02", "BUILD"],
+        ["03", "SYNC"],
+        ["04", "RENDER"],
+        ["05", "LIVE"]
+      ],
+      diagnostics: [
+        ["Front-end", "Interfaz lista", "96%"],
+        ["L&oacute;gica", "Soluciones activas", "92%"],
+        ["Creatividad", "Modo encendido", "99%"],
+        ["Equipo", "Promo INF conectada", "100%"]
+      ],
+      codeLines: [
+        "const promo = \"Inform&aacute;tica 2026\";",
+        "import orgullo from \"./equipo.js\";",
+        "while (ideas.length) { crear(); }",
+        "debug(dudas).then(aprender);",
+        "deploy(site, \"hecho por nosotros\");"
+      ],
+      streams: [
+        "01001100", "const promo = 2026;", "npm run futuro", "&lt;/html&gt;",
+        "deploy ok", "while(true) crear();", "git push origin orgullo", "debug --focus"
+      ]
+    },
+    "career-contaduria": {
+      code: "CF",
+      image: "assets/img/promo2026/contaduria-finanzas/hero/hero-preview.png",
+      eyebrow: "Promo 2026 presenta",
+      title: "Contadur&iacute;a y Finanzas",
+      line: "Los que administran, emprenden y hacen que los n&uacute;meros hablen.",
+      hype: "Calculando una entrada de alto nivel..."
+    },
+    "career-humanidades": {
+      code: "HUM",
+      image: "assets/img/promo2026/humanidades/hero/hero-preview.png",
+      eyebrow: "Promo 2026 presenta",
+      title: "Bachillerato en Humanidades",
+      line: "Los que comunican, piensan fuerte y dejan huella.",
+      hype: "Afinando criterio, voz y presencia..."
+    }
+  };
+
+  const getCareer = () => {
+    return Object.keys(careers).find((careerClass) => document.body.classList.contains(careerClass));
+  };
+
+  const renderDefaultIntro = (data) => `
+    <div class="promo-intro-bg" style="background-image: url('${data.image}')"></div>
+    <div class="promo-intro-panel">
+      <div class="promo-intro-logo">
+        <img src="assets/img/brand/logo-promo-2026-web.svg" alt="Logo Promo 2026" width="132" height="132" />
+      </div>
+      <span class="promo-intro-code">${data.code}</span>
+      <p class="promo-intro-eyebrow">${data.eyebrow}</p>
+      <h2>${data.title}</h2>
+      <p class="promo-intro-line">${data.line}</p>
+      <div class="promo-intro-progress" aria-label="Barra de carga">
+        <span></span>
+      </div>
+      <p class="promo-intro-hype">${data.hype}</p>
+    </div>
+  `;
+
+  const renderLegendaryIntro = (data) => `
+    <div class="promo-intro-bg" style="background-image: url('${data.image}')"></div>
+    <div class="promo-inf-cinematic">
+      <div class="promo-inf-aura" aria-hidden="true"></div>
+      <div class="promo-intro-grid" aria-hidden="true"></div>
+      <div class="promo-code-rain" aria-hidden="true">
+        ${data.streams.map((stream) => `<span>${stream}</span>`).join("")}
+      </div>
+      <div class="promo-inf-hud" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="promo-inf-statusbar" aria-hidden="true">
+        <strong>ITM // PROMO 2026</strong>
+        <span>mainframe: inform&aacute;tica</span>
+        <span>status: compiling</span>
+      </div>
+      <div class="promo-inf-layout">
+        <aside class="promo-inf-editor" aria-hidden="true">
+          <div class="promo-shell-bar">
+            <span></span><span></span><span></span>
+            <strong>promo2026/informatica/main.js</strong>
+          </div>
+          <div class="promo-code-editor">
+            ${data.codeLines.map((line, index) => `
+              <p class="promo-code-line">
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <code>${line}</code>
+              </p>
+            `).join("")}
+          </div>
+          <div class="promo-inf-terminal">
+            <p><span>&gt;</span> auth promo_2026</p>
+            <p><span>&gt;</span> load creatividad.dll</p>
+            <p><span>&gt;</span> mount proyectos/</p>
+            <p class="promo-shell-active"><span>&gt;</span> <strong class="promo-terminal-text"></strong><i class="promo-terminal-cursor"></i></p>
+          </div>
+        </aside>
+
+        <main class="promo-inf-core">
+          <div class="promo-inf-kernel" aria-hidden="true">
+            <span></span><span></span><span></span>
+            <strong class="promo-count-number">3</strong>
+          </div>
+          <div class="promo-inf-label">
+            <span class="promo-intro-code">${data.code}</span>
+            <p class="promo-intro-eyebrow">${data.eyebrow}</p>
+          </div>
+          <h2 data-text="Bachillerato en Informatica">${data.title}</h2>
+          <p class="promo-intro-line">${data.line}</p>
+          <div class="promo-inf-stages">
+            ${data.stages.map((stage) => `
+              <span class="promo-inf-stage-pill">
+                <b>${stage[0]}</b>
+                <small>${stage[1]}</small>
+              </span>
+            `).join("")}
+          </div>
+          <div class="promo-intro-skills">
+            ${data.skills.map((skill) => `<span>${skill}</span>`).join("")}
+          </div>
+          <div class="promo-progress-wrap">
+            <div class="promo-intro-progress" aria-label="Barra de carga">
+              <span></span>
+            </div>
+            <strong class="promo-progress-percent">0%</strong>
+          </div>
+          <p class="promo-intro-hype">${data.hype}</p>
+        </main>
+
+        <aside class="promo-inf-diagnostics" aria-hidden="true">
+          <strong class="promo-diag-title">diagn&oacute;stico del sistema</strong>
+          ${data.diagnostics.map((item) => `
+            <span class="promo-intro-module">
+              <b>${item[0]}</b>
+              <small>${item[1]}</small>
+              <i style="--diag:${item[2]}"></i>
+              <strong>${item[2]}</strong>
+            </span>
+          `).join("")}
+          <p>Hecho por Inform&aacute;tica. Presentado por Promo 2026.</p>
+        </aside>
+      </div>
+      <div class="promo-inf-final" aria-hidden="true">
+        <span>DEPLOY COMPLETE</span>
+        <strong>Inform&aacute;tica se presenta.</strong>
+      </div>
+    </div>
+  `;
+
+  const buildIntro = (data, careerClass) => {
+    const intro = document.createElement("div");
+    intro.className = `promo-intro${data.legendary ? " promo-intro-inf" : ""}`;
+    intro.setAttribute("role", "status");
+    intro.setAttribute("aria-live", "polite");
+    intro.innerHTML = data.legendary ? renderLegendaryIntro(data) : renderDefaultIntro(data);
+    intro.dataset.career = careerClass;
+    return intro;
+  };
+
+  const updateLegendaryIntro = (intro, data, elapsed, duration) => {
+    const percent = Math.min(elapsed / duration, 1);
+    const stepIndex = Math.min(Math.floor(percent * data.steps.length), data.steps.length - 1);
+    const command = data.commands[stepIndex] || data.commands[0];
+    const localStart = stepIndex / data.steps.length;
+    const localEnd = (stepIndex + 1) / data.steps.length;
+    const localProgress = Math.min(Math.max((percent - localStart) / (localEnd - localStart), 0), 1);
+    const visibleLetters = Math.max(1, Math.floor(command.length * localProgress));
+
+    const countdown = intro.querySelector(".promo-count-number");
+    const hype = intro.querySelector(".promo-intro-hype");
+    const terminalText = intro.querySelector(".promo-terminal-text");
+    const stagePills = intro.querySelectorAll(".promo-inf-stage-pill");
+    const codeLines = intro.querySelectorAll(".promo-code-line");
+    const diagnostics = intro.querySelectorAll(".promo-intro-module");
+    const progressPercent = intro.querySelector(".promo-progress-percent");
+
+    if (countdown) {
+      const label = percent > 0.86 ? "LIVE" : percent > 0.66 ? "RUN" : String(Math.max(1, 3 - Math.floor(percent * 4)));
+      countdown.textContent = label;
+    }
+
+    if (hype) hype.textContent = data.steps[stepIndex];
+    if (terminalText) terminalText.textContent = command.slice(0, visibleLetters);
+    if (progressPercent) progressPercent.textContent = `${Math.round(percent * 100)}%`;
+
+    intro.dataset.phase = data.stages[stepIndex]?.[1]?.toLowerCase() || "";
+    intro.classList.toggle("is-final", percent > 0.86);
+
+    stagePills.forEach((stage, index) => {
+      stage.classList.toggle("is-active", index <= stepIndex);
+    });
+
+    codeLines.forEach((line, index) => {
+      line.classList.toggle("is-lit", index <= stepIndex);
+    });
+
+    diagnostics.forEach((item, index) => {
+      item.classList.toggle("is-active", index <= Math.min(stepIndex, diagnostics.length - 1));
+    });
+  };
+
+  const init = () => {
+    const careerClass = getCareer();
+    if (!careerClass) return;
+
+    const data = careers[careerClass];
+    const intro = buildIntro(data, careerClass);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const duration = reduceMotion ? 700 : data.legendary ? 6800 : 2850;
+
+    document.body.classList.add("promo-intro-lock");
+    document.body.appendChild(intro);
+
+    const progress = intro.querySelector(".promo-intro-progress span");
+    let start = null;
+
+    const tick = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const percent = Math.min((elapsed / duration) * 100, 100);
+
+      if (progress) progress.style.width = `${percent}%`;
+      if (data.legendary) updateLegendaryIntro(intro, data, elapsed, duration);
+
+      if (elapsed < duration) {
+        window.requestAnimationFrame(tick);
+        return;
+      }
+
+      intro.classList.add("promo-intro-exit");
+      document.body.classList.remove("promo-intro-lock");
+      window.setTimeout(() => intro.remove(), 650);
+    };
+
+    window.requestAnimationFrame(tick);
+  };
+
+  return { init };
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+  window.ITM.promoIntro.init();
+});
+
+```
+
+CODIGO CSS DE LA INTRO - assets/css/style.css
+---------------------------------------------
+
+```css
+.promo-intro-lock {
+  overflow: hidden;
+}
+
+.promo-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: 24px;
+  color: var(--white);
+  background: #041012;
+  isolation: isolate;
+  animation: promo-intro-in 0.55s ease both;
+}
+
+.promo-intro-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.05);
+  animation: promo-intro-zoom 3s ease-out both;
+}
+
+.promo-intro::before,
+.promo-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.promo-intro::before {
+  z-index: -1;
+  background:
+    linear-gradient(115deg, rgba(4, 16, 18, 0.94), rgba(15, 118, 110, 0.72) 48%, rgba(245, 158, 11, 0.26)),
+    linear-gradient(180deg, rgba(4, 16, 18, 0.12), rgba(4, 16, 18, 0.84));
+}
+
+.promo-intro::after {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0.4;
+  transform: translateX(-100%);
+  animation: promo-intro-sweep 1.45s ease-in-out 0.35s both;
+}
+
+.promo-intro-panel {
+  width: min(760px, 100%);
+  padding: clamp(24px, 5vw, 42px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius);
+  background: rgba(4, 16, 18, 0.58);
+  box-shadow: 0 28px 100px rgba(0, 0, 0, 0.44);
+  backdrop-filter: blur(18px);
+  text-align: center;
+  animation: promo-intro-card 0.7s ease 0.08s both;
+}
+
+.promo-intro-logo {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.promo-intro-logo img {
+  width: 92px;
+  height: auto;
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.36));
+}
+
+.promo-intro-code {
+  display: inline-grid;
+  place-items: center;
+  min-width: 66px;
+  min-height: 38px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--radius);
+  background: rgba(245, 158, 11, 0.18);
+  color: #fde68a;
+  font-weight: 950;
+  font-size: 1.05rem;
+}
+
+.promo-intro-eyebrow,
+.promo-intro-hype {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.promo-intro h2 {
+  margin: 12px auto;
+  max-width: 700px;
+  font-size: clamp(2.5rem, 8vw, 5.7rem);
+  line-height: 0.92;
+}
+
+.promo-intro-line {
+  max-width: 620px;
+  margin: 0 auto 26px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1.02rem, 2.2vw, 1.28rem);
+  font-weight: 700;
+}
+
+.promo-intro-progress {
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.promo-intro-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, #2dd4bf, #fde68a, #f59e0b);
+  box-shadow: 0 0 22px rgba(45, 212, 191, 0.45);
+}
+
+.promo-intro-exit {
+  animation: promo-intro-out 0.62s ease both;
+}
+
+.promo-intro-epic {
+  background: #02090b;
+}
+
+.promo-intro-epic .promo-intro-bg {
+  filter: saturate(0.82) contrast(1.12) brightness(0.72);
+  animation-duration: 4.3s;
+}
+
+.promo-intro-epic::before {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(45, 212, 191, 0.24), transparent 26rem),
+    linear-gradient(115deg, rgba(2, 9, 11, 0.98), rgba(10, 72, 78, 0.78) 44%, rgba(2, 9, 11, 0.94)),
+    linear-gradient(180deg, rgba(2, 9, 11, 0.08), rgba(2, 9, 11, 0.94));
+}
+
+.promo-intro-epic::after {
+  opacity: 0.55;
+  animation-duration: 1.1s;
+}
+
+.promo-intro-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(103, 232, 249, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 232, 249, 0.08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(180deg, transparent, black 18%, black 76%, transparent);
+  opacity: 0.48;
+  animation: promo-grid-drift 4.3s linear both;
+}
+
+.promo-code-rain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  color: rgba(183, 255, 243, 0.2);
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(0.78rem, 1vw, 0.96rem);
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.promo-code-rain span {
+  position: absolute;
+  top: -10%;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  text-shadow: 0 0 18px rgba(103, 232, 249, 0.35);
+  animation: promo-code-fall 4.2s linear infinite;
+}
+
+.promo-code-rain span:nth-child(1) {
+  left: 9%;
+  animation-delay: 0.1s;
+}
+
+.promo-code-rain span:nth-child(2) {
+  left: 25%;
+  animation-delay: 0.8s;
+  animation-duration: 5.2s;
+}
+
+.promo-code-rain span:nth-child(3) {
+  left: 68%;
+  animation-delay: 0.35s;
+  animation-duration: 4.8s;
+}
+
+.promo-code-rain span:nth-child(4) {
+  left: 84%;
+  animation-delay: 1.2s;
+}
+
+.promo-code-rain span:nth-child(5) {
+  left: 52%;
+  animation-delay: 1.6s;
+  animation-duration: 5.6s;
+}
+
+.promo-code-rain span:nth-child(6) {
+  left: 39%;
+  animation-delay: 0.55s;
+  animation-duration: 4.6s;
+}
+
+.promo-code-rain span:nth-child(7) {
+  left: 93%;
+  animation-delay: 1.05s;
+  animation-duration: 5.8s;
+}
+
+.promo-code-rain span:nth-child(8) {
+  left: 16%;
+  animation-delay: 2s;
+  animation-duration: 5s;
+}
+
+.promo-inf-hud {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.promo-inf-hud span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  aspect-ratio: 1;
+  width: min(74vmin, 720px);
+  border: 1px solid rgba(103, 232, 249, 0.14);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 0 46px rgba(45, 212, 191, 0.08);
+  animation: promo-hud-spin 7s linear infinite;
+}
+
+.promo-inf-hud span:nth-child(2) {
+  width: min(55vmin, 520px);
+  border-style: dashed;
+  animation-direction: reverse;
+  animation-duration: 5.5s;
+}
+
+.promo-inf-hud span:nth-child(3) {
+  width: min(34vmin, 340px);
+  border-color: rgba(253, 230, 138, 0.18);
+  animation-duration: 4.4s;
+}
+
+.promo-inf-hud span:nth-child(4) {
+  width: min(88vmin, 900px);
+  border-color: rgba(52, 211, 153, 0.1);
+  animation-direction: reverse;
+  animation-duration: 10s;
+}
+
+.promo-inf-stage {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.82fr) minmax(420px, 1.2fr) minmax(230px, 0.72fr);
+  align-items: center;
+  gap: 18px;
+  width: min(1360px, 100%);
+  min-height: min(760px, calc(100svh - 48px));
+  perspective: 1200px;
+}
+
+.promo-inf-editor,
+.promo-inf-diagnostics {
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.24);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(3, 20, 24, 0.84), rgba(2, 9, 11, 0.74)),
+    rgba(2, 9, 11, 0.64);
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.38),
+    0 0 42px rgba(45, 212, 191, 0.12);
+  backdrop-filter: blur(16px);
+}
+
+.promo-inf-editor {
+  transform: rotateY(7deg);
+  animation: promo-editor-in 0.9s ease 0.2s both;
+}
+
+.promo-code-editor {
+  padding: 16px 14px 12px;
+  border-bottom: 1px solid rgba(103, 232, 249, 0.14);
+  background:
+    linear-gradient(90deg, rgba(103, 232, 249, 0.06), transparent 46%),
+    rgba(255, 255, 255, 0.025);
+}
+
+.promo-code-line {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  margin: 0 0 9px;
+  color: rgba(255, 255, 255, 0.48);
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(0.76rem, 1vw, 0.9rem);
+  font-weight: 800;
+  opacity: 0.52;
+  transform: translateX(-6px);
+  transition: opacity 0.22s ease, color 0.22s ease, transform 0.22s ease;
+}
+
+.promo-code-line span {
+  color: rgba(103, 232, 249, 0.52);
+  text-align: right;
+}
+
+.promo-code-line code {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.promo-code-line.is-lit {
+  color: #eafffb;
+  opacity: 1;
+  transform: translateX(0);
+  text-shadow: 0 0 16px rgba(103, 232, 249, 0.22);
+}
+
+.promo-intro-shell {
+  position: absolute;
+  left: clamp(16px, 4vw, 58px);
+  bottom: clamp(16px, 4vw, 48px);
+  width: min(460px, calc(100% - 32px));
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.28);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(3, 20, 24, 0.86), rgba(2, 9, 11, 0.74)),
+    rgba(2, 9, 11, 0.66);
+  color: #b7fff3;
+  font-family: Consolas, "Courier New", monospace;
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.36),
+    0 0 38px rgba(45, 212, 191, 0.12);
+  backdrop-filter: blur(16px);
+  animation: promo-terminal-in 0.8s ease 0.3s both;
+}
+
+.promo-shell-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(103, 232, 249, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.promo-shell-bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #67e8f9;
+  box-shadow: 0 0 16px rgba(103, 232, 249, 0.5);
+}
+
+.promo-shell-bar span:nth-child(2) {
+  background: #fde68a;
+}
+
+.promo-shell-bar span:nth-child(3) {
+  background: #34d399;
+}
+
+.promo-shell-bar strong {
+  margin-left: 8px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.promo-shell-lines {
+  padding: 12px 14px 14px;
+}
+
+.promo-shell-lines p {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: rgba(183, 255, 243, 0.68);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.promo-shell-lines span {
+  color: #67e8f9;
+}
+
+.promo-inf-terminal {
+  padding: 12px 14px 14px;
+}
+
+.promo-inf-terminal p {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: rgba(183, 255, 243, 0.68);
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.promo-inf-terminal span {
+  color: #67e8f9;
+}
+
+.promo-inf-terminal strong {
+  color: #eafffb;
+}
+
+.promo-shell-active {
+  color: #eafffb;
+}
+
+.promo-intro-terminal {
+  position: absolute;
+  left: clamp(16px, 4vw, 54px);
+  bottom: clamp(16px, 4vw, 46px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(420px, calc(100% - 32px));
+  padding: 14px;
+  border: 1px solid rgba(103, 232, 249, 0.22);
+  border-radius: var(--radius);
+  background: rgba(2, 9, 11, 0.58);
+  color: #b7fff3;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.82rem;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px);
+  animation: promo-terminal-in 0.8s ease 0.3s both;
+}
+
+.promo-terminal-prefix {
+  color: #67e8f9;
+  font-weight: 900;
+}
+
+.promo-terminal-text {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.promo-terminal-cursor {
+  width: 8px;
+  height: 1.1em;
+  flex: 0 0 auto;
+  background: #fde68a;
+  box-shadow: 0 0 18px rgba(253, 230, 138, 0.55);
+  animation: promo-cursor-blink 0.72s steps(2, end) infinite;
+}
+
+.promo-intro-epic-panel {
+  width: min(860px, 100%);
+  padding: clamp(20px, 3.6vw, 38px);
+  border-color: rgba(103, 232, 249, 0.26);
+  background:
+    linear-gradient(145deg, rgba(6, 19, 22, 0.88), rgba(11, 56, 61, 0.58)),
+    rgba(2, 9, 11, 0.62);
+  box-shadow:
+    0 34px 120px rgba(0, 0, 0, 0.56),
+    0 0 64px rgba(45, 212, 191, 0.18);
+}
+
+.promo-inf-launch {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.promo-inf-launch::before,
+.promo-inf-launch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.promo-inf-launch::before {
+  background:
+    linear-gradient(180deg, transparent, rgba(103, 232, 249, 0.11), transparent);
+  transform: translateY(-100%);
+  animation: promo-panel-scan 2.1s ease-in-out 0.4s infinite;
+}
+
+.promo-inf-launch::after {
+  border: 1px solid rgba(103, 232, 249, 0.13);
+  border-radius: inherit;
+  box-shadow: inset 0 0 42px rgba(103, 232, 249, 0.08);
+}
+
+.promo-inf-label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 14px;
+  padding: 6px;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.promo-intro-topline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 14px;
+  padding: 6px;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.promo-intro-epic-panel .promo-intro-code {
+  min-width: 78px;
+  color: #67e8f9;
+  background: rgba(45, 212, 191, 0.12);
+  border-color: rgba(103, 232, 249, 0.42);
+  box-shadow: 0 0 26px rgba(45, 212, 191, 0.18);
+}
+
+.promo-intro-countdown {
+  width: clamp(86px, 13vw, 126px);
+  height: clamp(86px, 13vw, 126px);
+  display: grid;
+  place-items: center;
+  margin: 18px auto;
+  border: 1px solid rgba(103, 232, 249, 0.38);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(45, 212, 191, 0.22), rgba(2, 9, 11, 0.78) 68%),
+    rgba(255, 255, 255, 0.04);
+  color: #fde68a;
+  font-size: clamp(2.8rem, 7vw, 5.1rem);
+  font-weight: 950;
+  line-height: 1;
+  box-shadow:
+    inset 0 0 34px rgba(103, 232, 249, 0.16),
+    0 0 46px rgba(45, 212, 191, 0.2);
+  animation: promo-count-pulse 1s ease-in-out infinite;
+}
+
+.promo-inf-launch .promo-intro-countdown {
+  position: relative;
+  z-index: 1;
+  width: clamp(100px, 12vw, 142px);
+  height: clamp(82px, 10vw, 118px);
+  border-radius: 0;
+  clip-path: polygon(12% 0, 88% 0, 100% 18%, 100% 82%, 88% 100%, 12% 100%, 0 82%, 0 18%);
+  background:
+    linear-gradient(135deg, rgba(103, 232, 249, 0.16), rgba(253, 230, 138, 0.18)),
+    rgba(2, 9, 11, 0.76);
+}
+
+.promo-count-number {
+  display: block;
+  transform: translateY(-1px);
+}
+
+.promo-intro-epic-panel .promo-intro-eyebrow {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.promo-intro-epic-panel h2 {
+  max-width: 720px;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: clamp(2.35rem, 6.2vw, 4.55rem);
+  text-wrap: balance;
+  text-shadow: 0 18px 42px rgba(0, 0, 0, 0.3);
+}
+
+.promo-inf-launch h2 {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  font-size: clamp(2.5rem, 5.4vw, 5.25rem);
+}
+
+.promo-inf-launch h2::before,
+.promo-inf-launch h2::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+}
+
+.promo-inf-launch h2::before {
+  color: #67e8f9;
+  transform: translate(2px, -1px);
+  clip-path: inset(0 0 58% 0);
+  animation: promo-title-glitch 2.1s steps(2, end) infinite;
+}
+
+.promo-inf-launch h2::after {
+  color: #fde68a;
+  transform: translate(-2px, 1px);
+  clip-path: inset(56% 0 0 0);
+  animation: promo-title-glitch 2.6s steps(2, end) infinite reverse;
+}
+
+.promo-intro-epic-panel .promo-intro-line {
+  max-width: 560px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.98rem, 1.7vw, 1.16rem);
+}
+
+.promo-inf-stages {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+  margin: 0 auto 16px;
+}
+
+.promo-inf-stage-pill {
+  min-width: 0;
+  padding: 8px 6px;
+  border: 1px solid rgba(103, 232, 249, 0.16);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.5);
+  transition: border-color 0.22s ease, color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+}
+
+.promo-inf-stage-pill b,
+.promo-inf-stage-pill small {
+  display: block;
+}
+
+.promo-inf-stage-pill b {
+  color: #fde68a;
+  font-size: 0.72rem;
+}
+
+.promo-inf-stage-pill small {
+  margin-top: 2px;
+  overflow: hidden;
+  font-size: 0.64rem;
+  font-weight: 950;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.promo-inf-stage-pill.is-active {
+  border-color: rgba(103, 232, 249, 0.5);
+  background: rgba(45, 212, 191, 0.13);
+  color: #eafffb;
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px rgba(103, 232, 249, 0.12);
+}
+
+.promo-intro-modules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0 auto 16px;
+}
+
+.promo-intro-module {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03)),
+    rgba(2, 9, 11, 0.32);
+  text-align: left;
+  transform: translateY(0);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.promo-intro-module strong,
+.promo-intro-module b,
+.promo-intro-module small {
+  display: block;
+}
+
+.promo-intro-module strong {
+  color: #fde68a;
+  font-size: 0.8rem;
+  font-weight: 950;
+}
+
+.promo-intro-module b {
+  margin-top: 4px;
+  color: #ffffff;
+  font-size: 0.98rem;
+}
+
+.promo-intro-module small {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.promo-intro-module.is-active {
+  border-color: rgba(52, 211, 153, 0.52);
+  box-shadow: 0 0 26px rgba(45, 212, 191, 0.14);
+  transform: translateY(-2px);
+}
+
+.promo-intro-skills {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 18px;
+}
+
+.promo-intro-skills span {
+  padding: 7px 10px;
+  border: 1px solid rgba(103, 232, 249, 0.22);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+  color: #d7fffa;
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.promo-intro-epic-panel .promo-intro-progress {
+  height: 14px;
+  border-color: rgba(103, 232, 249, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.promo-intro-epic-panel .promo-intro-progress span {
+  background:
+    linear-gradient(90deg, #67e8f9, #2dd4bf, #fde68a, #f59e0b);
+  box-shadow: 0 0 28px rgba(103, 232, 249, 0.48);
+}
+
+.promo-progress-wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: 10px;
+}
+
+.promo-progress-percent {
+  color: #fde68a;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.86rem;
+  font-weight: 950;
+  text-align: right;
+}
+
+.promo-intro-epic-panel .promo-intro-hype {
+  position: relative;
+  z-index: 1;
+  color: #b7fff3;
+}
+
+.promo-inf-diagnostics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: stretch;
+  padding: 16px;
+  transform: rotateY(-7deg);
+  animation: promo-diag-in 0.9s ease 0.28s both;
+}
+
+.promo-diag-title {
+  color: #67e8f9;
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.promo-inf-diagnostics .promo-intro-module {
+  display: block;
+  padding: 12px;
+  text-align: left;
+}
+
+.promo-inf-diagnostics .promo-intro-module b {
+  margin: 0;
+  color: #ffffff;
+}
+
+.promo-inf-diagnostics .promo-intro-module small {
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.promo-inf-diagnostics .promo-intro-module i {
+  position: relative;
+  display: block;
+  height: 6px;
+  margin: 9px 0 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.promo-inf-diagnostics .promo-intro-module i::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--diag);
+  border-radius: inherit;
+  background: linear-gradient(90deg, #67e8f9, #34d399, #fde68a);
+  box-shadow: 0 0 16px rgba(103, 232, 249, 0.4);
+}
+
+.promo-inf-diagnostics .promo-intro-module strong {
+  color: #67e8f9;
+  font-size: 0.78rem;
+}
+
+.promo-inf-diagnostics > p {
+  margin: auto 0 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.promo-intro-inf {
+  place-items: stretch;
+  overflow: hidden;
+  padding: clamp(12px, 2vw, 24px);
+  background:
+    radial-gradient(circle at 50% 48%, rgba(45, 212, 191, 0.17), transparent 34rem),
+    linear-gradient(135deg, #01070a, #031719 48%, #01070a);
+}
+
+.promo-intro-inf .promo-intro-bg {
+  opacity: 0.22;
+  filter: saturate(0.75) contrast(1.22) brightness(0.55) blur(1px);
+  animation-duration: 6.8s;
+}
+
+.promo-intro-inf::before {
+  z-index: -1;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(103, 232, 249, 0.2), transparent 22rem),
+    radial-gradient(circle at 82% 70%, rgba(253, 230, 138, 0.13), transparent 20rem),
+    linear-gradient(115deg, rgba(1, 7, 10, 0.96), rgba(4, 52, 54, 0.82) 48%, rgba(1, 7, 10, 0.97));
+}
+
+.promo-intro-inf::after {
+  z-index: 3;
+  opacity: 0.18;
+  background:
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 5px);
+  transform: none;
+  animation: promo-scanline-roll 4s linear infinite;
+}
+
+.promo-inf-cinematic {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  width: 100%;
+  min-height: calc(100svh - clamp(24px, 4vw, 48px));
+  color: #ffffff;
+}
+
+.promo-inf-aura {
+  position: absolute;
+  inset: -20%;
+  z-index: -2;
+  background:
+    conic-gradient(from 180deg, transparent, rgba(103, 232, 249, 0.14), transparent, rgba(253, 230, 138, 0.09), transparent);
+  filter: blur(26px);
+  opacity: 0.9;
+  animation: promo-aura-spin 9s linear infinite;
+}
+
+.promo-inf-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: var(--radius);
+  background: rgba(2, 9, 11, 0.62);
+  color: rgba(255, 255, 255, 0.66);
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  backdrop-filter: blur(16px);
+}
+
+.promo-inf-statusbar strong {
+  color: #67e8f9;
+}
+
+.promo-inf-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.82fr) minmax(420px, 1.25fr) minmax(240px, 0.78fr);
+  align-items: center;
+  gap: 18px;
+  min-height: 0;
+  perspective: 1200px;
+}
+
+.promo-inf-core {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-height: min(680px, calc(100svh - 140px));
+  padding: clamp(22px, 3.8vw, 42px);
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.3);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(2, 14, 18, 0.9), rgba(9, 65, 68, 0.62)),
+    rgba(2, 9, 11, 0.7);
+  box-shadow:
+    0 34px 120px rgba(0, 0, 0, 0.58),
+    0 0 72px rgba(45, 212, 191, 0.2);
+  text-align: center;
+  animation: promo-core-rise 0.85s ease 0.18s both;
+  backdrop-filter: blur(18px);
+}
+
+.promo-inf-core::before,
+.promo-inf-core::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.promo-inf-core::before {
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent, rgba(103, 232, 249, 0.11), transparent);
+  transform: translateY(-110%);
+  animation: promo-panel-scan 2.2s ease-in-out 0.3s infinite;
+}
+
+.promo-inf-core::after {
+  inset: 12px;
+  border: 1px solid rgba(103, 232, 249, 0.14);
+  border-radius: calc(var(--radius) - 4px);
+  box-shadow: inset 0 0 46px rgba(103, 232, 249, 0.08);
+}
+
+.promo-inf-kernel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: clamp(122px, 14vw, 184px);
+  height: clamp(122px, 14vw, 184px);
+  margin: 0 auto 18px;
+}
+
+.promo-inf-kernel span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(103, 232, 249, 0.36);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  animation: promo-kernel-spin 5.6s linear infinite;
+}
+
+.promo-inf-kernel span:nth-child(2) {
+  inset: 14px;
+  border-color: rgba(253, 230, 138, 0.35);
+  animation-direction: reverse;
+  animation-duration: 4.4s;
+}
+
+.promo-inf-kernel span:nth-child(3) {
+  inset: 28px;
+  border-color: rgba(52, 211, 153, 0.42);
+  animation-duration: 3.2s;
+}
+
+.promo-inf-kernel strong {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 58%;
+  height: 58%;
+  color: #fde68a;
+  font-size: clamp(2.1rem, 4.8vw, 4.25rem);
+  font-weight: 950;
+  line-height: 1;
+  text-shadow: 0 0 34px rgba(253, 230, 138, 0.4);
+}
+
+.promo-inf-core .promo-inf-label,
+.promo-inf-core h2,
+.promo-inf-core .promo-intro-line,
+.promo-inf-core .promo-inf-stages,
+.promo-inf-core .promo-intro-skills,
+.promo-inf-core .promo-progress-wrap,
+.promo-inf-core .promo-intro-hype {
+  position: relative;
+  z-index: 2;
+}
+
+.promo-inf-core h2 {
+  max-width: 830px;
+  margin: 8px auto 12px;
+  color: #ffffff;
+  font-size: clamp(2.7rem, 6vw, 5.75rem);
+  line-height: 0.9;
+  text-wrap: balance;
+  text-shadow:
+    0 20px 46px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(103, 232, 249, 0.16);
+}
+
+.promo-inf-core h2::before,
+.promo-inf-core h2::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.24;
+}
+
+.promo-inf-core h2::before {
+  color: #67e8f9;
+  transform: translate(2px, -1px);
+  clip-path: inset(0 0 55% 0);
+  animation: promo-title-glitch 2s steps(2, end) infinite;
+}
+
+.promo-inf-core h2::after {
+  color: #fde68a;
+  transform: translate(-2px, 1px);
+  clip-path: inset(58% 0 0 0);
+  animation: promo-title-glitch 2.5s steps(2, end) infinite reverse;
+}
+
+.promo-inf-core .promo-intro-line {
+  max-width: 620px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(0.98rem, 1.4vw, 1.18rem);
+}
+
+.promo-inf-final {
+  justify-self: center;
+  display: inline-grid;
+  gap: 2px;
+  min-width: min(430px, 100%);
+  padding: 10px 18px;
+  border: 1px solid rgba(253, 230, 138, 0.3);
+  border-radius: var(--radius);
+  background: rgba(2, 9, 11, 0.7);
+  color: #fde68a;
+  text-align: center;
+  transform: translateY(22px);
+  opacity: 0;
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.32);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(14px);
+}
+
+.promo-inf-final span {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.74rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.promo-inf-final strong {
+  color: #ffffff;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+.promo-intro-inf.is-final .promo-inf-final {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.promo-intro-inf.is-final .promo-inf-core {
+  border-color: rgba(253, 230, 138, 0.5);
+  box-shadow:
+    0 34px 120px rgba(0, 0, 0, 0.58),
+    0 0 88px rgba(253, 230, 138, 0.23);
+}
+
+@keyframes promo-intro-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes promo-intro-out {
+  to {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+}
+
+@keyframes promo-intro-card {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes promo-intro-zoom {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes promo-intro-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes promo-grid-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 128px 96px;
+  }
+}
+
+@keyframes promo-code-fall {
+  from {
+    transform: translateY(-12vh);
+    opacity: 0;
+  }
+  12%,
+  82% {
+    opacity: 1;
+  }
+  to {
+    transform: translateY(116vh);
+    opacity: 0;
+  }
+}
+
+@keyframes promo-aura-spin {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.04);
+  }
+}
+
+@keyframes promo-scanline-roll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 32px;
+  }
+}
+
+@keyframes promo-hud-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes promo-core-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes promo-kernel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes promo-editor-in {
+  from {
+    opacity: 0;
+    transform: translateX(-26px) rotateY(14deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotateY(7deg);
+  }
+}
+
+@keyframes promo-diag-in {
+  from {
+    opacity: 0;
+    transform: translateX(26px) rotateY(-14deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotateY(-7deg);
+  }
+}
+
+@keyframes promo-panel-scan {
+  0% {
+    transform: translateY(-120%);
+  }
+  55%,
+  100% {
+    transform: translateY(120%);
+  }
+}
+
+@keyframes promo-title-glitch {
+  0%,
+  78%,
+  100% {
+    opacity: 0.12;
+    transform: translate(0, 0);
+  }
+  82% {
+    opacity: 0.34;
+    transform: translate(3px, -1px);
+  }
+  86% {
+    opacity: 0.2;
+    transform: translate(-2px, 1px);
+  }
+}
+
+@keyframes promo-terminal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes promo-cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes promo-count-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
+}
+```

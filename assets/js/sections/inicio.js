@@ -6,54 +6,54 @@ window.ITM = window.ITM || {};
 window.ITM.sections = window.ITM.sections || {};
 
 window.ITM.sections.inicio = {
-  eyebrow: "Hecho para quienes quieren crear",
-  title: "Inform&aacute;tica no se explica: se demuestra con proyectos.",
+  eyebrow: "Inform&aacute;tica ITM &middot; Instituto T&eacute;cnico Moraz&aacute;n",
+  title: "Inform&aacute;tica 2026: c&oacute;digo, memoria y futuro.",
   lead:
-    "Esta carrera es para estudiantes que quieren programar, resolver problemas, crear contenido digital y dejar evidencia de lo que saben hacer. Aqu&iacute; la tecnolog&iacute;a se aprende construyendo.",
+    "Somos Inform&aacute;tica del Instituto T&eacute;cnico Moraz&aacute;n. Esta p&aacute;gina queda como recuerdo de nuestra Promo 2026: proyectos, compa&ntilde;erismo, c&oacute;digo, soporte, creatividad y momentos que van a formar parte de nuestra historia.",
   actions: [
     {
-      label: "Quiero estudiar Inform&aacute;tica",
-      href: "#matricula",
+      label: "Ver Inform&aacute;tica",
+      href: "#laboratorio",
       style: "button"
     },
     {
-      label: "Ver logros",
-      href: "#logros",
+      label: "Explorar recuerdos",
+      href: "#promo2026",
       style: "button button-ghost"
     }
   ],
   stats: [
     {
+      label: "Especialidad",
+      value: "INF",
+      text: "Programaci&oacute;n, soporte, redes y dise&ntilde;o digital."
+    },
+    {
+      label: "Promo",
+      value: "2026",
+      text: "Una generaci&oacute;n que quiere dejar huella propia."
+    },
+    {
       label: "Enfoque",
-      value: "Tech",
-      text: "C&oacute;digo, soporte, dise&ntilde;o digital y pensamiento l&oacute;gico."
-    },
-    {
-      label: "Pr&aacute;ctica",
-      value: "100%",
-      text: "Cada habilidad apunta a una entrega que se pueda mostrar."
-    },
-    {
-      label: "Futuro",
-      value: "3 rutas",
-      text: "Estudiar, trabajar o emprender con bases tecnol&oacute;gicas."
+      value: "LIVE",
+      text: "Recuerdos, proyectos y noticias del &aacute;rea."
     }
   ],
   quickInfo: [
     {
       number: "01",
-      title: "Crea desde cero",
-      text: "Empieza con bases claras y avanza hacia proyectos visibles."
+      title: "C&oacute;digo y pr&aacute;ctica",
+      text: "Ejercicios, proyectos y soluciones que se pueden mostrar."
     },
     {
       number: "02",
-      title: "Deja evidencia",
-      text: "Cada trabajo puede convertirse en parte de tu portafolio."
+      title: "Identidad de grupo",
+      text: "Una presentaci&oacute;n pensada para recordar qui&eacute;nes somos."
     },
     {
       number: "03",
-      title: "Piensa como t&eacute;cnico",
-      text: "Construye bases para universidad, empleo t&eacute;cnico o emprendimientos digitales."
+      title: "Noticias del &aacute;rea",
+      text: "Momentos destacados, convivencia y avances de la promo."
     }
   ]
 };

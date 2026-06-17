@@ -7,24 +7,24 @@ window.ITM.sections = window.ITM.sections || {};
 
 window.ITM.sections.actividades = {
   eyebrow: "Actividades",
-  title: "La vida escolar tambi&eacute;n se construye fuera del aula.",
-  text: "Clubes, torneos, expresi&oacute;n art&iacute;stica y servicio comunitario para crecer con disciplina, amistad y prop&oacute;sito.",
+  title: "Lo que hace viva a Inform&aacute;tica dentro y fuera del aula.",
+  text: "Actividades pensadas para aprender, crear, convivir y dejar evidencia de una promoci&oacute;n que quiere ser recordada.",
   items: [
     {
-      label: "Ciencia",
-      title: "Club de experimentos"
+      label: "C&oacute;digo",
+      title: "Retos de programaci&oacute;n"
     },
     {
-      label: "Cultura",
-      title: "Arte, m&uacute;sica y expresi&oacute;n"
+      label: "Dise&ntilde;o",
+      title: "Piezas para la identidad visual"
     },
     {
-      label: "Deporte",
-      title: "Equipos y torneos internos"
+      label: "Soporte",
+      title: "Pr&aacute;cticas t&eacute;cnicas"
     },
     {
-      label: "Servicio",
-      title: "Voluntariado comunitario"
+      label: "Promo",
+      title: "Fotos, frases y recuerdos"
     }
   ]
 };
