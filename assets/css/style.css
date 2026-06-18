@@ -558,7 +558,7 @@ textarea {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--surface-solid);
+  background: white;
   box-shadow: var(--shadow-soft);
 }
 
@@ -2897,22 +2897,6 @@ textarea {
   overflow: hidden;
 }
 
-.tiktok-embed-wrap .tiktok-embed {
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin: 0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.tiktok-embed-wrap iframe {
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  border-radius: 10px;
-}
-
 /* Noticias */
 .news-layout {
   display: grid;
@@ -5043,9 +5027,19 @@ body.hacker-mode-active .hacker-toggle span {
   z-index: 0;
 }
 .mascot-wrapper {
-  cursor: pointer;
+  cursor: grab;
   transition: transform 0.2s;
   display: inline-block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.mascot-wrapper:active {
+  cursor: grabbing;
+}
+.mascot-svg {
+  -webkit-user-drag: none;
+  user-select: none;
 }
 .mascot-wrapper:hover {
   transform: scale(1.08) rotate(2deg);

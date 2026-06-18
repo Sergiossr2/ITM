@@ -827,86 +827,97 @@ MISIÓN: Formar líderes digitales capaces de resolver problemas reales mediante
       "¡Tú puedes ser el próximo desarrollador del ITM! 💪"
     ];
 
-    const sectionMessages = {
-      "laboratorio": "¡Bienvenido al Lab! Probá la terminal interactiva ⌨️",
-      "alumnos": "Acá están mis compañeros de la Promo 2026 🧑‍🎓",
-      "faq": "¿Tenés dudas? Seguro la respuesta está acá 🧐",
-      "noticias": "¡Mucha actividad y proyectos nuevos! 📰",
-      "promo2026": "¡Descubrí todo sobre nuestra promo! 🚀",
-      "quiz": "¡Hacé el quiz y descubrí tu perfil vocacional! 🧠"
-    };
+    let hideTimeout = null;
+    let dragActive = false;
+    let dragStartX = 0, dragStartY = 0;
+    let widgetStartX = 0, widgetStartY = 0;
 
-    let msgIndex = 0;
-    let typingTimeout = null;
+    const hideBubble = () => { bubble.style.opacity = "0"; };
 
     const showMessage = (msg) => {
-      bubble.style.opacity = "0";
-      clearTimeout(typingTimeout);
-      typingTimeout = setTimeout(() => {
-        bubble.textContent = msg;
-        bubble.style.opacity = "1";
-      }, 200);
+      clearTimeout(hideTimeout);
+      bubble.textContent = msg;
+      bubble.style.opacity = "1";
+      hideTimeout = setTimeout(hideBubble, 4000);
     };
 
-    // Animar ojos al clic
     const blinkEyes = () => {
       const eyes = svg.querySelectorAll(".mascot-eye");
       const mouth = svg.querySelector(".mascot-mouth");
       eyes.forEach(e => e.style.transform = "scaleY(0.1)");
-      if (mouth) mouth.setAttribute("d", "M 53 52 Q 60 48 67 52"); // surprised face
+      if (mouth) mouth.setAttribute("d", "M 53 52 Q 60 48 67 52");
       setTimeout(() => {
         eyes.forEach(e => e.style.transform = "scaleY(1)");
-        if (mouth) mouth.setAttribute("d", "M 53 50 Q 60 56 67 50"); // smile
+        if (mouth) mouth.setAttribute("d", "M 53 50 Q 60 56 67 50");
       }, 400);
     };
 
     wrapper.addEventListener("click", () => {
-      msgIndex = (msgIndex + 1) % messages.length;
-      showMessage(messages[msgIndex]);
+      if (dragActive) return;
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      showMessage(msg);
       blinkEyes();
-      // Pequeña animación bounce
       wrapper.style.transform = "scale(1.18) rotate(-4deg)";
       setTimeout(() => { wrapper.style.transform = ""; }, 320);
     });
 
-    // Ojos siguen el cursor
     const pupils = svg.querySelectorAll(".mascot-pupil");
     document.addEventListener("mousemove", (e) => {
+      if (dragActive) return;
       const rect = svg.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-      const distance = Math.min(2, Math.hypot(e.clientX - centerX, e.clientY - centerY) / 80); // limit max distance
-      
-      const x = Math.cos(angle) * distance;
-      const y = Math.sin(angle) * distance;
-      
-      pupils.forEach(pupil => {
-        pupil.style.transform = `translate(${x}px, ${y}px)`;
-      });
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const angle = Math.atan2(e.clientY - cy, e.clientX - cx);
+      const dist = Math.min(2, Math.hypot(e.clientX - cx, e.clientY - cy) / 80);
+      pupils.forEach(p => p.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`);
     });
 
-    // Mensajes contextuales al hacer scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && sectionMessages[entry.target.id]) {
-          showMessage(sectionMessages[entry.target.id]);
-        }
-      });
-    }, { threshold: 0.6 });
+    // Drag universal (mouse + touch)
+    const onPointerDown = (clientX, clientY) => {
+      const r = floatWidget.getBoundingClientRect();
+      dragActive = true;
+      dragStartX = clientX;
+      dragStartY = clientY;
+      widgetStartX = r.left;
+      widgetStartY = r.top;
+      floatWidget.style.transition = "none";
+      floatWidget.style.left = r.left + "px";
+      floatWidget.style.top = r.top + "px";
+      floatWidget.style.bottom = "auto";
+      floatWidget.style.right = "auto";
+    };
 
-    document.querySelectorAll("section[id]").forEach(section => {
-      observer.observe(section);
+    const onPointerMove = (clientX, clientY) => {
+      if (!dragActive) return;
+      floatWidget.style.left = (widgetStartX + clientX - dragStartX) + "px";
+      floatWidget.style.top = (widgetStartY + clientY - dragStartY) + "px";
+    };
+
+    const onPointerUp = () => {
+      if (!dragActive) return;
+      dragActive = false;
+      floatWidget.style.transition = "";
+    };
+
+    wrapper.addEventListener("mousedown", (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      onPointerDown(e.clientX, e.clientY);
     });
+    document.addEventListener("mousemove", (e) => { onPointerMove(e.clientX, e.clientY); });
+    document.addEventListener("mouseup", onPointerUp);
 
-    // Rotar mensajes automáticamente cada 10 segundos
-    setInterval(() => {
-      if (!wrapper.matches(":hover")) {
-        msgIndex = (msgIndex + 1) % messages.length;
-        showMessage(messages[msgIndex]);
-      }
-    }, 10000);
+    wrapper.addEventListener("touchstart", (e) => {
+      if (e.touches.length !== 1) return;
+      onPointerDown(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches.length !== 1) return;
+      onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    document.addEventListener("touchend", onPointerUp);
+
+    bubble.style.opacity = "0";
   };
 
   /* =========================================================
